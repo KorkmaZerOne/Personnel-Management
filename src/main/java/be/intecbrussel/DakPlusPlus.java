@@ -26,7 +26,7 @@ public class DakPlusPlus {
 
             if (mainChoice != 0) {
                 showSubMenu(mainChoice);
-                subChoice = requestInput(0, 6);
+                subChoice = requestInput(0, 7);
 
                 userChoice(mainChoice, subChoice);
             }
@@ -129,6 +129,8 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
+            } else if (subChoice == 7){
+                System.out.println("Main Menu");
             }
         }
         if (mainChoice == 2) {
@@ -138,6 +140,17 @@ public class DakPlusPlus {
                 List<Project> projects = null;
                 try {
                     projects = projectService.getAllProjects();
+                    projects.forEach(b -> System.out.println(b.toString()));
+                } catch (SQLException ignored) {
+                    System.out.println("Problems with db...");
+                    ignored.printStackTrace();
+                }
+            } else if (subChoice == 2) {
+                List<Project> projects = null;
+                try {
+                    System.out.println("Enter today's date: ");
+                    String date = scanner.nextLine();
+                    projects = projectService.getProjectsByStartDate(date);
                     projects.forEach(b -> System.out.println(b.toString()));
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...");
@@ -175,6 +188,8 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
+            } else if (subChoice == 5){
+                System.out.println("Main Menu");
             }
         }
     }
@@ -195,6 +210,7 @@ public class DakPlusPlus {
                         System.out.println("4. Create a new employee?");
                         System.out.println("5. Edit a employee?");
                         System.out.println("6. Delete a employee?");
+                        System.out.println("7. Main menu");
                     }
                     if (choice == 2) {
                         System.out.println("0. Exit");
@@ -202,6 +218,7 @@ public class DakPlusPlus {
                         System.out.println("2. Show projects starting today");
                         System.out.println("3. Create a new project");
                         System.out.println("4. Delete a project");
+                        System.out.println("5. Main menu");
                     }
                     if (choice == 3) {
                         System.out.println("0. Exit");
@@ -210,6 +227,7 @@ public class DakPlusPlus {
                         System.out.println("3. Create a new work list");
                         System.out.println("4. Edit a work list");
                         System.out.println("5. Delete a work list");
+                        System.out.println("6. Main menu");
                     }
                 }
 

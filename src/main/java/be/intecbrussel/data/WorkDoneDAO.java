@@ -1,10 +1,9 @@
 package be.intecbrussel.data;
 
+import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.WorkDone;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

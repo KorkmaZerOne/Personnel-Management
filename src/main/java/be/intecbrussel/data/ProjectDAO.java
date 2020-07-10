@@ -66,4 +66,23 @@ public class ProjectDAO {
         }
         return true;
     }
+
+    public List<Project> getProjectsByStartDate(String date ) throws SQLException {
+            Connection connection = ConnectionPort.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE Date LIKE ?");
+            statement.setString(1, date);
+            ResultSet rs = statement.executeQuery();
+
+            List<Project> result = new ArrayList<>();
+        while (rs.next()) {
+            Project project = new Project();
+            project.setId(rs.getInt("Id"));
+            project.setStartDate(rs.getString("StartDate"));
+            project.setExplanation(rs.getString("Explanation"));
+            project.setPrice(rs.getInt("Price"));
+            project.setEndDate(rs.getString("EndDate"));
+            result.add(project);
+        }
+        return result;
+    }
 }
