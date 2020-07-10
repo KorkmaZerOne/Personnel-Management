@@ -18,8 +18,8 @@ public class EmployeeService {
         return employee;
     }
 
-    public List<Employee> getEmployeesByName(String firstName , String lastName) throws SQLException {
-        return employeeDAO.getEmployeesByName(firstName , lastName);
+    public List<Employee> getEmployeesByName(String name) throws SQLException {
+        return employeeDAO.getEmployeesByName(name);
     }
 
     public List<Employee> getEmployeesByBirthDate() throws SQLException {

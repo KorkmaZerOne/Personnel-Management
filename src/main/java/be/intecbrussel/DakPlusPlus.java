@@ -3,9 +3,13 @@ package be.intecbrussel;
 import be.intecbrussel.data.TableFactory;
 import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
+import be.intecbrussel.model.WorkDone;
 import be.intecbrussel.services.EmployeeService;
 import be.intecbrussel.services.ProjectService;
+import be.intecbrussel.services.WorkDoneService;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +20,7 @@ public class DakPlusPlus {
         TableFactory table = new TableFactory();
         table.createEmployeeTable();
         table.createProjectsTable();
+        table.createWorkDoneTable();
 
         int mainChoice;
         int subChoice = -1;
@@ -49,11 +54,9 @@ public class DakPlusPlus {
             } else if (subChoice == 2) {
                 List<Employee> employees = null;
                 try {
-                    System.out.println("First Name: ");
-                    String firstName = scanner.nextLine();
-                    System.out.println("Last Name: ");
-                    String lastName = scanner.nextLine();
-                    employees = employeeService.getEmployeesByName(firstName, lastName);
+                    System.out.println("Enter employee name or last name for checking");
+                    String name = scanner.nextLine();
+                    employees = employeeService.getEmployeesByName(name);
                     employees.forEach(b -> System.out.println(b.toString()));
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...");
@@ -95,7 +98,7 @@ public class DakPlusPlus {
                 }
             } else if (subChoice == 5) {
                 try {
-                    System.out.println("Write the employee ID which is you want update");
+                    System.out.println("Write the employee ID which is you want to update");
                     int id = Integer.parseInt(scanner.nextLine());
                     Employee employee = employeeService.getEmployeeById(id);
 
@@ -121,7 +124,7 @@ public class DakPlusPlus {
                 }
             } else if (subChoice == 6) {
                 try {
-                    System.out.println("Write the employee ID which is you want delete");
+                    System.out.println("Write the employee ID which is you want to delete");
                     int id = Integer.parseInt(scanner.nextLine());
                     boolean result = employeeService.deleteEmployee(id);
                     System.out.println(result ? "Deleted" : "Error");
@@ -130,7 +133,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 7){
-                System.out.println("Main Menu");
+                showMenu();
             }
         }
         if (mainChoice == 2) {
@@ -189,11 +192,77 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 5){
-                System.out.println("Main Menu");
+                showMenu();
+            }
+        }
+        if (mainChoice == 3) {
+            WorkDoneService workDoneService = new WorkDoneService();
+            Scanner scanner = new Scanner(System.in);
+            if (subChoice == 1) {
+                List<WorkDone> workDone = null;
+                try {
+                    workDone = workDoneService.getAllWorkDone();
+                    workDone.forEach(b -> System.out.println(b.toString()));
+                } catch (SQLException ignored) {
+                    System.out.println(" Problems with db..." + ignored.getMessage());
+                }
+            } else if (subChoice == 2) {
+                List<WorkDone> workDone = null;
+                try {
+                    System.out.println("Enter employee ID and project ID for checking");
+                    System.out.println("Employee ID: ");
+                    int employeeId = scanner.nextInt();
+                    System.out.println("Project ID: ");
+                    int projectId = scanner.nextInt();
+                    workDone = workDoneService.getWorkDoneByEmployee(employeeId , projectId);
+                    workDone.forEach(b -> System.out.println(b.toString()));
+                } catch (SQLException ignored) {
+                    System.out.println(" Problems with db..." + ignored.getMessage());
+                }
+            } else if (subChoice == 3) {
+                WorkDone workDone = new WorkDone();
+                System.out.println("Enter employee ID: ");
+                workDone.setProjectId(Integer.parseInt(scanner.nextLine()));
+                System.out.println("Enter project ID: ");
+                workDone.setProjectId(Integer.parseInt(scanner.nextLine()));
+
+                boolean result = workDoneService.addWorkDone(workDone);
+                System.out.println(result ? "Success" : "Error");
+
+            } else if (subChoice == 4) {
+                try {
+                    System.out.println("Enter employee ID: ");
+                    int employeeId = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter project ID: ");
+                    int projectId = Integer.parseInt(scanner.nextLine());
+                    WorkDone workDone = workDoneService.getWorkDoneByProject(employeeId , projectId);
+                    System.out.println("Date (yyyy.mm.dd): ");
+                    workDone.setDate(scanner.nextLine());
+                    System.out.println("HoursWorked: ");
+                    workDone.setWorkingHours(scanner.nextInt());
+                    System.out.println("Remarks: ");
+                    workDone.setWarnings(scanner.nextLine());
+                    boolean result = workDoneService.updateWorkDone(workDone);
+                    System.out.println(result ? "Success" : "Error");
+
+                } catch (SQLException ignored) {
+                    System.out.println("Problems with db...: " + ignored.getMessage());
+                    ignored.printStackTrace();
+                }
+            }else if (subChoice == 5) {
+                System.out.println("Enter employee ID: ");
+                int employeeId = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter project ID: ");
+                int projectId = Integer.parseInt(scanner.nextLine());
+                boolean result = workDoneService.deleteWorkDone(employeeId ,projectId);
+                System.out.println(result ? "Deleted" : "Error");
+            } else if (subChoice == 6) {
+                showMenu();
             }
         }
     }
                 private static void showMenu () {
+                    System.out.println("---MAIN MENU--");
                     System.out.println("0. Exit");
                     System.out.println("1. Employees");
                     System.out.println("2. Projects");
@@ -203,6 +272,7 @@ public class DakPlusPlus {
                 private static void showSubMenu ( int choice){
 
                     if (choice == 1) {
+                        System.out.println("---SUB MENU--");
                         System.out.println("0. Exit");
                         System.out.println("1. Show all employees");
                         System.out.println("2. Show all employees filtered by last name");
@@ -213,6 +283,7 @@ public class DakPlusPlus {
                         System.out.println("7. Main menu");
                     }
                     if (choice == 2) {
+                        System.out.println("---SUB MENU--");
                         System.out.println("0. Exit");
                         System.out.println("1. Show ongoing projects");
                         System.out.println("2. Show projects starting today");
@@ -221,9 +292,10 @@ public class DakPlusPlus {
                         System.out.println("5. Main menu");
                     }
                     if (choice == 3) {
+                        System.out.println("---SUB MENU--");
                         System.out.println("0. Exit");
                         System.out.println("1. Show all work list");
-                        System.out.println("2. Show all work list filtered by employee");
+                        System.out.println("2. Show work list filtered by employee");
                         System.out.println("3. Create a new work list");
                         System.out.println("4. Edit a work list");
                         System.out.println("5. Delete a work list");
@@ -236,7 +308,7 @@ public class DakPlusPlus {
                     int input = -1;
                     do {
                         try {
-                            System.out.println("Select a menu");
+                            System.out.println("<Select a menu>");
                             input = scanner.nextInt();
                         } catch (InputMismatchException e) {
                             input = -1;

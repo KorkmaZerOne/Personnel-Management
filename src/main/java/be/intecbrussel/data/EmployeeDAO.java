@@ -47,11 +47,11 @@ public class EmployeeDAO {
         return employees;
     }
 
-    public List<Employee> getEmployeesByName(String firstName , String lastName) throws SQLException {
+    public List<Employee> getEmployeesByName(String name) throws SQLException {
         Connection connection = ConnectionPort.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Employees WHERE FirstName LIKE ? OR LastName LIKE ?");
-        statement.setString(1, firstName);
-        statement.setString(2, lastName);
+        statement.setString(1, name);
+        statement.setString(2, name);
         ResultSet rs = statement.executeQuery();
 
         List<Employee> result = new ArrayList<>();
@@ -59,10 +59,10 @@ public class EmployeeDAO {
             Employee employee = new Employee();
             employee.setFirstName(rs.getString("FirstName"));
             employee.setLastName(rs.getString("LastName"));
-            employee.setPhoneNumber(rs.getString("PhoneNumber"));
+          /*  employee.setPhoneNumber(rs.getString("PhoneNumber"));
             employee.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
             employee.setDateOfBirth(rs.getString("BirthDate"));
-            employee.setSalary(rs.getInt("Salary"));
+            employee.setSalary(rs.getInt("Salary"));*/
             result.add(employee);
         }
         return result;
