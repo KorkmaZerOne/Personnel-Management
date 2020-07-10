@@ -23,6 +23,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByBirthDate() throws SQLException {
+        System.out.println("Celebrate the employee birthday");
        return employeeDAO.getEmployeesByBirthDate();
     }
 

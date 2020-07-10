@@ -1,12 +1,10 @@
 package be.intecbrussel.model;
 
-import java.util.Date;
-
 public class WorkDone {
 
     private int employeeId;
     private int projectId;
-    private Date date;
+    private String date;
     private int workingHours;
     private String remarks;
 
@@ -26,11 +24,11 @@ public class WorkDone {
         this.projectId = projectId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

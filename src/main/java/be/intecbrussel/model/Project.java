@@ -1,19 +1,25 @@
 package be.intecbrussel.model;
 
-import java.util.Date;
-
 public class Project {
-
-    private Date startDate;
+    private int id;
+    private String startDate;
     private String explanation;
-    private double price;
-    private Date endDate;
+    private int price;
+    private String endDate;
 
-    public Date getStartDate() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -25,26 +31,27 @@ public class Project {
         this.explanation = explanation;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
     @Override
     public String toString() {
-        return "Projects{" +
-                "startDate=" + startDate +
+        return "Project{" +
+                "id=" + id +
+                ", startDate=" + startDate +
                 ", explanation='" + explanation + '\'' +
                 ", price=" + price +
                 ", endDate=" + endDate +

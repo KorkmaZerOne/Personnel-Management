@@ -22,7 +22,7 @@ public class WorkDoneDAO {
             WorkDone workDone = new WorkDone();
             workDone.setEmployeeId(rs.getInt("EmployeeId"));
             workDone.setProjectId(rs.getInt("ProjectId"));
-            workDone.setDate(rs.getDate("Date"));
+            workDone.setDate(rs.getString("Date"));
             workDone.setWorkingHours(rs.getInt("HoursWorked"));
             workDone.setWarnings(rs.getString("Warnings"));
             result.add(workDone);

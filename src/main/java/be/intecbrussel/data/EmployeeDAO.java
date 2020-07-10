@@ -10,7 +10,6 @@ public class EmployeeDAO {
     public List<Employee> getAllEmployees() throws SQLException {
 
         Connection conn= ConnectionPort.getConnection();
-
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM Employees");
 
@@ -31,10 +30,8 @@ public class EmployeeDAO {
 
     public Employee getEmployeeById(int id) throws SQLException {
         Connection connection = ConnectionPort.getConnection();
-
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Employees WHERE EmployeeId = ?");
         statement.setInt(1, id);
-
         ResultSet rs = statement.executeQuery();
 
         Employee employees = new Employee();
@@ -52,11 +49,9 @@ public class EmployeeDAO {
 
     public List<Employee> getEmployeesByName(String firstName , String lastName) throws SQLException {
         Connection connection = ConnectionPort.getConnection();
-
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Employees WHERE FirstName LIKE ? OR LastName LIKE ?");
         statement.setString(1, firstName);
         statement.setString(2, lastName);
-
         ResultSet rs = statement.executeQuery();
 
         List<Employee> result = new ArrayList<>();
@@ -75,9 +70,7 @@ public class EmployeeDAO {
 
     public List<Employee> getEmployeesByBirthDate() throws SQLException {
         Connection connection = ConnectionPort.getConnection();
-
         PreparedStatement statement = connection.prepareStatement("select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
-
         ResultSet rs = statement.executeQuery();
 
         List<Employee> result = new ArrayList<>();
@@ -96,9 +89,8 @@ public class EmployeeDAO {
 
     public boolean addEmployee(Employee employee) throws SQLException {
         try {
-        Connection connection = ConnectionPort.getConnection();
-
-        PreparedStatement statement = connection.prepareStatement(
+            Connection connection = ConnectionPort.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO Employees (\n" +
                         "EmployeeId,\n" +
                         "FirstName,\n" +
@@ -115,7 +107,7 @@ public class EmployeeDAO {
                         "'"+employee.getPhoneNumberICE()+"',\n" +
                         "'"+employee.getDateOfBirth()+"',\n" +
                         employee.getSalary()+")"
-                );
+            );
             statement.execute();
         }
         catch (SQLException e ) {
@@ -128,7 +120,6 @@ public class EmployeeDAO {
     public boolean updateEmployee(Employee employee) throws SQLException {
         try {
             Connection connection = ConnectionPort.getConnection();
-
             PreparedStatement statement = connection.prepareStatement(
                     "update Employees set \n" +
                             "FirstName=\n'" +employee.getFirstName()+"',"+
@@ -151,7 +142,6 @@ public class EmployeeDAO {
     public boolean deleteEmployee(int id) throws SQLException {
         try {
             Connection connection = ConnectionPort.getConnection();
-
             PreparedStatement statement = connection.prepareStatement(
                     "delete from Employees where EmployeeId = ?"
             );

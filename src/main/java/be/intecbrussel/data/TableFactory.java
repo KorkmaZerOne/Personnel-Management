@@ -1,7 +1,6 @@
 package be.intecbrussel.data;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,43 +21,47 @@ public class TableFactory {
             Connection conn = ConnectionPort.getConnection();
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlEmployee);
-            System.out.println("Table Created");
+            System.out.println("Employees table was created");
         }
         catch (SQLException e ) {
-            System.out.println("An error has occurred on Table Creation" + e.getMessage());
-
+            System.out.println("An error has occurred on table creation" + e.getMessage());
         }
 
     }
-    public void createProjectTable() {
-        String sqlProject = "CREATE TABLE IF NOT EXISTS Projects (" +
-                "'ProjectId' INT(5) PRIMARY KEY ," +
-                "'Explanation' VARCHAR(100) NOT NULL ," +
-                "'StartDate' DATE(10) NOT NULL ," +
-                "'Price' INT(8) ," +
-                "'EndDate' DATE(10)";
+    public void createProjectsTable() {
+        String sqlProjects = "CREATE TABLE IF NOT EXISTS Projects\n" +
+                "(\n" +
+                "   ProjectId int PRIMARY KEY NOT NULL,\n" +
+                "   Explanation varchar(200),\n" +
+                "   StartDate date,\n" +
+                "   Price int,\n" +
+                "   EndDate date\n" +
+                ")";
         try {
             Connection conn = ConnectionPort.getConnection();
             Statement statement = conn.createStatement();
-            statement.executeUpdate(sqlProject);
-            System.out.println("Table Created");
+            statement.executeUpdate(sqlProjects);
+            System.out.println("Projects table was created");
         } catch (SQLException e) {
-            System.out.println("An error has occurred on Table Creation");
-            }
+            System.out.println("An error has occurred on table creation" + e.getMessage());
         }
-        public void createWorkDoneTable () {
-            String sqlWorkDone = "CREATE TABLE IF NOT EXISTS WorkDone (" +
-                    "FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId) ," +
-                    "FOREIGN KEY (ProjectId) REFERENCES Projects (ProjectId) ," +
-                    "'Date' DATE(10) NOT NULL ," +
-                    "'HoursWorked' INT(8) ," +
-                    "'Remarks' VARCHAR(100)";
+    }
+    public void createWorkDoneTable () {
+            String sqlWorkDone = "CREATE TABLE IF NOT EXISTS WorkDone\n" +
+                    "(\n" +
+                    "   FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId),\n" +
+                    "   FOREIGN KEY (ProjectId) REFERENCES Projects (ProjectId),\n" +
+                    "   Date date,\n" +
+                    "   Remarks varchar(100),\n" +
+                    "   HoursWorked int\n" +
+                    ")";
             try {
                 Connection conn = ConnectionPort.getConnection();
                 Statement statement = conn.createStatement();
-                statement.executeQuery(sqlWorkDone);
+                statement.executeUpdate(sqlWorkDone);
+                System.out.println("Projects table was created");
             } catch (SQLException e) {
-                System.out.println("An error has occurred on Table Creation");
+                System.out.println("An error has occurred on table creation" + e.getMessage());
             }
         }
     }
