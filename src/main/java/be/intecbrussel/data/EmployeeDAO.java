@@ -78,8 +78,7 @@ public class EmployeeDAO {
     public List<Employee> getEmployeesByBirthDate() throws SQLException {
         Connection connection = ConnectionPort.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement(
-                "select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
+        PreparedStatement statement = connection.prepareStatement("select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
 
         ResultSet rs = statement.executeQuery();
 
