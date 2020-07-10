@@ -8,12 +8,12 @@ import java.util.List;
 public class EmployeeDAO {
 
     public List<Employee> getAllEmployees() throws SQLException {
-    // 1 create connection to db
+
         Connection conn= ConnectionPort.getConnection();
-    // 2 send query
+
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM Employees");
-    // 3 parse query result
+
         List<Employee> result = new ArrayList<>();
         while (rs.next()) {
             Employee employees = new Employee();
@@ -26,7 +26,6 @@ public class EmployeeDAO {
             employees.setSalary(rs.getInt("Salary"));
             result.add(employees);
         }
-    // return result
         return result;
     }
 
@@ -48,7 +47,6 @@ public class EmployeeDAO {
             employees.setDateOfBirth(rs.getString("BirthDate"));
             employees.setSalary(rs.getInt("Salary"));
         }
-        // return result
         return employees;
     }
 
@@ -118,11 +116,10 @@ public class EmployeeDAO {
                         "'"+employee.getDateOfBirth()+"',\n" +
                         employee.getSalary()+")"
                 );
-
             statement.execute();
         }
         catch (SQLException e ) {
-            System.out.println("An error has occurred on Table Creation" + e.getMessage());
+            System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
         return true;
@@ -145,7 +142,7 @@ public class EmployeeDAO {
             statement.execute();
         }
         catch (SQLException e ) {
-            System.out.println("An error has occurred on Table Creation" + e.getMessage());
+            System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
         return true;
@@ -162,7 +159,7 @@ public class EmployeeDAO {
             statement.execute();
         }
         catch (SQLException e ) {
-            System.out.println("An error has occurred on Table Creation" + e.getMessage());
+            System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
         return true;
