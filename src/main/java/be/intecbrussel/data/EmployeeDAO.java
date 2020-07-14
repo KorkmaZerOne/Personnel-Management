@@ -59,10 +59,6 @@ public class EmployeeDAO {
             Employee employee = new Employee();
             employee.setFirstName(rs.getString("FirstName"));
             employee.setLastName(rs.getString("LastName"));
-          /*  employee.setPhoneNumber(rs.getString("PhoneNumber"));
-            employee.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
-            employee.setDateOfBirth(rs.getString("BirthDate"));
-            employee.setSalary(rs.getInt("Salary"));*/
             result.add(employee);
         }
         return result;
@@ -91,22 +87,15 @@ public class EmployeeDAO {
         try {
             Connection connection = ConnectionPort.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO Employees (\n" +
-                        "EmployeeId,\n" +
-                        "FirstName,\n" +
-                        "LastName,\n" +
-                        "PhoneNumber,\n" +
-                        "PhoneNumberICE,\n" +
-                        "BirthDate,\n" +
-                        "Salary) \n" +
-                        "VALUES (\n" +
-                        employee.getId()+",\n" +
-                        "'"+employee.getFirstName()+"',\n" +
-                        "'"+employee.getLastName()+"',\n" +
-                        "'"+employee.getPhoneNumber()+"',\n" +
-                        "'"+employee.getPhoneNumberICE()+"',\n" +
-                        "'"+employee.getDateOfBirth()+"',\n" +
-                        employee.getSalary()+")"
+                "INSERT INTO Employees VALUES"
+                        + "('" + employee.getId()
+                        + "' , '" + employee.getFirstName()
+                        + "' , '" + employee.getLastName()
+                        + "' , '" + employee.getPhoneNumber()
+                        + "' , '" + employee.getPhoneNumberICE()
+                        + "' , '" + employee.getDateOfBirth()
+                        + "' , '" + employee.getSalary()
+                        + "' )"
             );
             statement.execute();
         }

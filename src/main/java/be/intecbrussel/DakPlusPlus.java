@@ -9,7 +9,6 @@ import be.intecbrussel.services.ProjectService;
 import be.intecbrussel.services.WorkDoneService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -85,12 +84,11 @@ public class DakPlusPlus {
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
                     System.out.println("Date of Birth (yyyy.mm.dd): ");
-                    String date = scanner.nextLine();
-                    employee.setDateOfBirth(date);
+                    employee.setDateOfBirth(scanner.nextLine());
                     System.out.println("Salary: ");
                     employee.setSalary(scanner.nextInt());
                     boolean result = employeeService.addEmployee(employee);
-                    System.out.println(result ? "Success" : "Error");
+                    System.out.println(result ? "EMPLOYEE WAS ADDED" : "Error");
 
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
@@ -111,12 +109,11 @@ public class DakPlusPlus {
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
                     System.out.println("Date of Birth (yyyy.mm.dd): ");
-                    String date = scanner.nextLine();
-                    employee.setDateOfBirth(date);
+                    employee.setDateOfBirth(scanner.nextLine());
                     System.out.println("Salary: ");
                     employee.setSalary(scanner.nextInt());
                     boolean result = employeeService.updateEmployee(employee);
-                    System.out.println(result ? "Success" : "Error");
+                    System.out.println(result ? "UPDATE IS SUCCESS" : "Error");
 
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
@@ -164,18 +161,16 @@ public class DakPlusPlus {
                     Project project = new Project();
                     System.out.println("ID: ");
                     project.setId(Integer.parseInt(scanner.nextLine()));
-                    System.out.println("Start Date (yyyy.mm.dd): ");
-                    String startDate = scanner.nextLine();
-                    project.setStartDate(startDate);
                     System.out.println("explanation: ");
                     project.setExplanation(scanner.nextLine());
+                    System.out.println("Start Date (yyyy.mm.dd): ");
+                    project.setStartDate(scanner.nextLine());
                     System.out.println("Price: ");
                     project.setPrice(scanner.nextInt());
                     System.out.println("End Date (yyyy.mm.dd): ");
-                    String endDate = scanner.nextLine();
-                    project.setEndDate(endDate);
+                    project.setEndDate(scanner.nextLine());
                     boolean result = projectService.addProject(project);
-                    System.out.println(result ? "Success" : "Error");
+                    System.out.println(result ? "THE PROJECT WAS ADDED" : "Error");
 
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
@@ -186,7 +181,7 @@ public class DakPlusPlus {
                     System.out.println("Write the project ID which is you want delete");
                     int id = Integer.parseInt(scanner.nextLine());
                     boolean result = projectService.deleteProject(id);
-                    System.out.println(result ? "Deleted" : "Error");
+                    System.out.println(result ? "THE PROJECT WAS DELETED" : "Error");
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
@@ -225,9 +220,8 @@ public class DakPlusPlus {
                 workDone.setProjectId(Integer.parseInt(scanner.nextLine()));
                 System.out.println("Enter project ID: ");
                 workDone.setProjectId(Integer.parseInt(scanner.nextLine()));
-
                 boolean result = workDoneService.addWorkDone(workDone);
-                System.out.println(result ? "Success" : "Error");
+                System.out.println(result ? "THE WORKDONE WAS ADDED" : "Error");
 
             } else if (subChoice == 4) {
                 try {
@@ -243,7 +237,7 @@ public class DakPlusPlus {
                     System.out.println("Remarks: ");
                     workDone.setWarnings(scanner.nextLine());
                     boolean result = workDoneService.updateWorkDone(workDone);
-                    System.out.println(result ? "Success" : "Error");
+                    System.out.println(result ? "THE WORKDONE LIST WAS UPDATED" : "Error");
 
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
@@ -255,7 +249,7 @@ public class DakPlusPlus {
                 System.out.println("Enter project ID: ");
                 int projectId = Integer.parseInt(scanner.nextLine());
                 boolean result = workDoneService.deleteWorkDone(employeeId ,projectId);
-                System.out.println(result ? "Deleted" : "Error");
+                System.out.println(result ? "THE WORKDONE LIST WAS DELETED" : "Error");
             } else if (subChoice == 6) {
                 showMenu();
             }

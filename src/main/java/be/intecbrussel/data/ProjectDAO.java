@@ -1,8 +1,6 @@
 package be.intecbrussel.data;
 
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +16,8 @@ public class ProjectDAO {
         List<Project> result = new ArrayList<>();
         while (rs.next()) {
             Project project = new Project();
-            project.setStartDate(rs.getString("StartDate"));
             project.setExplanation(rs.getString("Explanation"));
+            project.setStartDate(rs.getString("StartDate"));
             project.setPrice(rs.getInt("Price"));
             project.setEndDate(rs.getString("EndDate"));
             result.add(project);
@@ -27,22 +25,19 @@ public class ProjectDAO {
         return result;
     }
 
+
+
     public boolean addProject(Project project) throws SQLException {
         try {
             Connection connection = ConnectionPort.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Projects (\n" +
-                            "ProjectId,\n" +
-                            "Explanation,\n" +
-                            "StartDate,\n" +
-                            "Price,\n" +
-                            "EndDate) \n" +
-                            "VALUES (\n" +
-                            project.getId()+",\n" +
-                            "'"+project.getExplanation()+"',\n" +
-                            "'"+project.getStartDate()+"',\n" +
-                            "'"+project.getPrice()+"',\n" +
-                            project.getEndDate()+")"
+                    "INSERT INTO Projects VALUES"
+                            + "('" + project.getId()
+                            + "' , '" + project.getExplanation()
+                            + "' , '" + project.getStartDate()
+                            + "' , '" + project.getPrice()
+                            + "' , '" + project.getEndDate()
+                            + "' )"
             );
             statement.execute();
         } catch (SQLException e) {

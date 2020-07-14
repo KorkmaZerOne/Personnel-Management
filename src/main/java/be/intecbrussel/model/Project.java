@@ -2,8 +2,8 @@ package be.intecbrussel.model;
 
 public class Project {
     private int id;
-    private String startDate;
     private String explanation;
+    private String startDate;
     private int price;
     private String endDate;
 
@@ -51,8 +51,8 @@ public class Project {
     public String toString() {
         return "Project{" +
                 "id=" + id +
+                ", explanation='" + explanation +
                 ", startDate=" + startDate +
-                ", explanation='" + explanation + '\'' +
                 ", price=" + price +
                 ", endDate=" + endDate +
                 '}';

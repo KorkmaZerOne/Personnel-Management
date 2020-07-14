@@ -51,21 +51,13 @@ public class WorkDoneDAO {
         try {
             Connection connection = ConnectionPort.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO WorkDone (\n" +
-                            "EmployeeId,\n" +
-                            "ProjectId,\n" +
-                            "LastName,\n" +
-                            "Date,\n" +
-                            "Remarks,\n" +
-                            "HoursWorked,\n" +
-                            "Salary) \n" +
-                            "VALUES (\n" +
-                            workDone.getEmployeeId() + ",\n" +
-                            "'" + workDone.getProjectId() + "',\n" +
-                            "'" + workDone.getDate() + "',\n" +
-                            "'" + workDone.getRemarks() + "',\n" +
-                            "'" + workDone.getWorkingHours() + "',\n" +
-                            ")"
+                    "INSERT INTO WorkDone VALUES"
+                            + "('" + workDone.getEmployeeId()
+                            + "' , '" + workDone.getProjectId()
+                            + "' , '" + workDone.getDate()
+                            + "' , '" + workDone.getWorkingHours()
+                            + "' , '" + workDone.getRemarks()
+                            + "' )"
             );
             statement.execute();
         } catch (SQLException e) {

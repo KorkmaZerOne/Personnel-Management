@@ -29,14 +29,13 @@ public class TableFactory {
 
     }
     public void createProjectsTable() {
-        String sqlProjects = "CREATE TABLE IF NOT EXISTS Projects\n" +
-                "(\n" +
-                "   ProjectId int PRIMARY KEY NOT NULL,\n" +
-                "   Explanation varchar(200),\n" +
-                "   StartDate date,\n" +
-                "   Price int,\n" +
-                "   EndDate date\n" +
-                ")";
+        String sqlProjects = "CREATE TABLE IF NOT EXISTS Projects ("
+                + " ProjectId int PRIMARY KEY NOT NULL, "
+                + " Explanation varchar(200), "
+                + " StartDate date, "
+                + " Price int, "
+                + " EndDate date "
+                + ")";
         try {
             Connection conn = ConnectionPort.getConnection();
             Statement statement = conn.createStatement();
@@ -47,19 +46,20 @@ public class TableFactory {
         }
     }
     public void createWorkDoneTable () {
-            String sqlWorkDone = "CREATE TABLE IF NOT EXISTS WorkDone\n" +
-                    "(\n" +
-                    "   FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId),\n" +
-                    "   FOREIGN KEY (ProjectId) REFERENCES Projects (ProjectId),\n" +
-                    "   Date date,\n" +
-                    "   Remarks varchar(100),\n" +
-                    "   HoursWorked int\n" +
-                    ")";
+            String sqlWorkDone = "CREATE TABLE IF NOT EXISTS WorkDone ("
+                    + " EmployeeId int ,"
+                    + " ProjectId int ,"
+                    + " Date date ,"
+                    + " HoursWorked int ,"
+                    + " Remarks varchar(100) ,"
+                    + " FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId) ,"
+                    + " FOREIGN KEY (ProjectId) REFERENCES Projects (ProjectId) "
+                    + ")";
             try {
                 Connection conn = ConnectionPort.getConnection();
                 Statement statement = conn.createStatement();
                 statement.executeUpdate(sqlWorkDone);
-                System.out.println("Projects table was created");
+                System.out.println("WorkDone table was created");
             } catch (SQLException e) {
                 System.out.println("An error has occurred on table creation" + e.getMessage());
             }
