@@ -111,7 +111,6 @@ public class DakPlusPlus {
                     System.out.println("Write the employee ID which is you want to update");
                     int id = Integer.parseInt(scanner.nextLine());
                     Employee employee = employeeService.getEmployeeById(id);
-
                     System.out.println("First Name: ");
                     employee.setFirstName(scanner.nextLine());
                     System.out.println("Last Name: ");
@@ -122,9 +121,18 @@ public class DakPlusPlus {
                     employee.setPhoneNumberICE(scanner.nextLine());
                     System.out.println("Date of Birth (yyyy.mm.dd): ");
                     String birthDate = scanner.nextLine();
-                    employee.setDateOfBirth(birthDate);
+                    if (hasAgeRequirement(birthDate)){
+                        employee.setDateOfBirth(birthDate);
+                    } else {
+                        System.out.println("Employing children under 18 is legally a crime!");
+                    }
                     System.out.println("Salary: ");
-                    employee.setSalary(scanner.nextInt());
+                    int wage = scanner.nextInt();
+                    if (wage > 0){
+                        employee.setSalary(wage);
+                    } else {
+                        System.out.println("Please pay the employee his salary before his sweat has dried up!");
+                    }
                     boolean result = employeeService.updateEmployee(employee);
                     System.out.println(result ? "UPDATE IS SUCCESS" : "Error");
 
