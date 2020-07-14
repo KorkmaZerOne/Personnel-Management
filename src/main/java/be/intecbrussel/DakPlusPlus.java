@@ -9,6 +9,8 @@ import be.intecbrussel.services.ProjectService;
 import be.intecbrussel.services.WorkDoneService;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -84,9 +86,19 @@ public class DakPlusPlus {
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
                     System.out.println("Date of Birth (yyyy.mm.dd): ");
-                    employee.setDateOfBirth(scanner.nextLine());
+                    String birthDate = scanner.nextLine();
+                    if (hasAgeRequirement(birthDate)){
+                        employee.setDateOfBirth(birthDate);
+                    } else {
+                        System.out.println("Employing children under 18 is legally a crime!");
+                    }
                     System.out.println("Salary: ");
-                    employee.setSalary(scanner.nextInt());
+                    int wage = scanner.nextInt();
+                    if (wage > 0){
+                        employee.setSalary(wage);
+                    } else {
+                        System.out.println("Please pay the employee his salary before his sweat has dried up!");
+                    }
                     boolean result = employeeService.addEmployee(employee);
                     System.out.println(result ? "EMPLOYEE WAS ADDED" : "Error");
 
@@ -109,7 +121,8 @@ public class DakPlusPlus {
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
                     System.out.println("Date of Birth (yyyy.mm.dd): ");
-                    employee.setDateOfBirth(scanner.nextLine());
+                    String birthDate = scanner.nextLine();
+                    employee.setDateOfBirth(birthDate);
                     System.out.println("Salary: ");
                     employee.setSalary(scanner.nextInt());
                     boolean result = employeeService.updateEmployee(employee);
@@ -159,16 +172,17 @@ public class DakPlusPlus {
             } else if (subChoice == 3) {
                 try {
                     Project project = new Project();
-                    System.out.println("ID: ");
+                    System.out.println("ID:");
                     project.setId(Integer.parseInt(scanner.nextLine()));
-                    System.out.println("explanation: ");
+                    System.out.println("explanation:");
                     project.setExplanation(scanner.nextLine());
-                    System.out.println("Start Date (yyyy.mm.dd): ");
+                    System.out.println("Start Date (yyyy.mm.dd):");
                     project.setStartDate(scanner.nextLine());
-                    System.out.println("Price: ");
+                    System.out.println("Price:");
                     project.setPrice(scanner.nextInt());
-                    System.out.println("End Date (yyyy.mm.dd): ");
+                    System.out.println("End Date (yyyy.mm.dd):");
                     project.setEndDate(scanner.nextLine());
+
                     boolean result = projectService.addProject(project);
                     System.out.println(result ? "THE PROJECT WAS ADDED" : "Error");
 
@@ -235,7 +249,7 @@ public class DakPlusPlus {
                     System.out.println("HoursWorked: ");
                     workDone.setWorkingHours(scanner.nextInt());
                     System.out.println("Remarks: ");
-                    workDone.setWarnings(scanner.nextLine());
+                    workDone.setRemarks(scanner.nextLine());
                     boolean result = workDoneService.updateWorkDone(workDone);
                     System.out.println(result ? "THE WORKDONE LIST WAS UPDATED" : "Error");
 
@@ -255,7 +269,20 @@ public class DakPlusPlus {
             }
         }
     }
-                private static void showMenu () {
+
+    private static boolean hasAgeRequirement(String birthDate) {
+        //Scanner scanner = new Scanner(System.in);
+        //String birthDate = scanner.nextLine();
+        LocalDate parsedBirthDate = LocalDate.parse(birthDate);
+        long noOfDaysBetween = ChronoUnit.DAYS.between(parsedBirthDate, LocalDate.now());
+        if( noOfDaysBetween >= 6570){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static void showMenu () {
                     System.out.println("---MAIN MENU--");
                     System.out.println("0. Exit");
                     System.out.println("1. Employees");

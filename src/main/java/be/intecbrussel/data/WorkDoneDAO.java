@@ -1,8 +1,6 @@
 package be.intecbrussel.data;
 
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.WorkDone;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class WorkDoneDAO {
             workDone.setProjectId(rs.getInt("ProjectId"));
             workDone.setDate(rs.getString("Date"));
             workDone.setWorkingHours(rs.getInt("HoursWorked"));
-            workDone.setWarnings(rs.getString("Warnings"));
+            workDone.setRemarks(rs.getString("Remarks"));
             result.add(workDone);
         }
         return result;
@@ -40,9 +38,8 @@ public class WorkDoneDAO {
             workDone.setProjectId(rs.getInt("ProjectId"));
             workDone.setDate(rs.getString("Date"));
             workDone.setWorkingHours(rs.getInt("HoursWorked"));
-            workDone.setWarnings(rs.getString("Warnings"));
+            workDone.setRemarks(rs.getString("Remarks"));
             result.add(workDone);
-
         }
         return result;
     }
@@ -101,7 +98,7 @@ public class WorkDoneDAO {
             workDone.setProjectId(rs.getInt("ProjectId"));
             workDone.setDate(rs.getString("Date"));
             workDone.setWorkingHours(rs.getInt("HoursWorked"));
-            workDone.setWarnings(rs.getString("Warnings"));
+            workDone.setRemarks(rs.getString("Remarks"));
         }
         return workDone;
     }

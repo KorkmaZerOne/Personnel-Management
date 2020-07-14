@@ -44,7 +44,7 @@ public class WorkDone {
         return remarks;
     }
 
-    public void setWarnings(String remarks) {
+    public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
@@ -55,7 +55,7 @@ public class WorkDone {
                 ", projectId=" + projectId +
                 ", date=" + date +
                 ", workingHours=" + workingHours +
-                ", warnings='" + remarks + '\'' +
+                ", remarks='" + remarks + '\'' +
                 '}';
     }
 }
