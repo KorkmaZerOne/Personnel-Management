@@ -75,11 +75,11 @@ public class DakPlusPlus {
             } else if (subChoice == 4) {
                 try {
                     Employee employee = new Employee();
-                    System.out.println("ID: ");
+                    System.out.println("ID (Obligatory): ");
                     employee.setId(Integer.parseInt(scanner.nextLine()));
-                    System.out.println("First Name: ");
+                    System.out.println("First Name (Obligatory): ");
                     employee.setFirstName(scanner.nextLine());
-                    System.out.println("Last Name: ");
+                    System.out.println("Last Name (Obligatory): ");
                     employee.setLastName(scanner.nextLine());
                     System.out.println("Phone: ");
                     employee.setPhoneNumber(scanner.nextLine());
@@ -111,15 +111,15 @@ public class DakPlusPlus {
                     System.out.println("Write the employee ID which is you want to update");
                     int id = Integer.parseInt(scanner.nextLine());
                     Employee employee = employeeService.getEmployeeById(id);
-                    System.out.println("First Name: ");
+                    System.out.println("First Name (Obligatory): ");
                     employee.setFirstName(scanner.nextLine());
-                    System.out.println("Last Name: ");
+                    System.out.println("Last Name (Obligatory): ");
                     employee.setLastName(scanner.nextLine());
                     System.out.println("Phone: ");
                     employee.setPhoneNumber(scanner.nextLine());
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
-                    System.out.println("Date of Birth (yyyy.mm.dd): ");
+                    System.out.println("Date of Birth (yyyy-mm-dd): ");
                     String birthDate = scanner.nextLine();
                     if (hasAgeRequirement(birthDate)){
                         employee.setDateOfBirth(birthDate);
@@ -184,11 +184,11 @@ public class DakPlusPlus {
                     project.setId(Integer.parseInt(scanner.nextLine()));
                     System.out.println("explanation:");
                     project.setExplanation(scanner.nextLine());
-                    System.out.println("Start Date (yyyy.mm.dd):");
+                    System.out.println("Start Date (yyyy-mm-dd):");
                     project.setStartDate(scanner.nextLine());
                     System.out.println("Price:");
                     project.setPrice(scanner.nextInt());
-                    System.out.println("End Date (yyyy.mm.dd):");
+                    System.out.println("End Date (yyyy-mm-dd):");
                     project.setEndDate(scanner.nextLine());
 
                     boolean result = projectService.addProject(project);
@@ -252,7 +252,7 @@ public class DakPlusPlus {
                     System.out.println("Enter project ID: ");
                     int projectId = Integer.parseInt(scanner.nextLine());
                     WorkDone workDone = workDoneService.getWorkDoneByProject(employeeId , projectId);
-                    System.out.println("Date (yyyy.mm.dd): ");
+                    System.out.println("Date (yyyy-mm-dd): ");
                     workDone.setDate(scanner.nextLine());
                     System.out.println("HoursWorked: ");
                     workDone.setWorkingHours(scanner.nextInt());

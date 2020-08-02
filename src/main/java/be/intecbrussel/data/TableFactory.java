@@ -10,8 +10,8 @@ public class TableFactory {
         String sqlEmployee = "CREATE TABLE IF NOT EXISTS Employees\n" +
                 "(\n" +
                 "   EmployeeId int PRIMARY KEY NOT NULL,\n" +
-                "   FirstName varchar(30),\n" +
-                "   LastName varchar(30),\n" +
+                "   FirstName varchar(30) NOT NULL CHECK (FirstName <> ''), \n" +
+                "   LastName varchar(30) NOT NULL CHECK (LastName <> ''),\n" +
                 "   PhoneNumber varchar(11),\n" +
                 "   PhoneNumberICE varchar(11),\n" +
                 "   BirthDate date,\n" +
