@@ -85,7 +85,7 @@ public class DakPlusPlus {
                     employee.setPhoneNumber(scanner.nextLine());
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
-                    System.out.println("Date of Birth (yyyy.mm.dd): ");
+                    System.out.println("Date of Birth (yyyy-mm-dd): ");
                     String birthDate = scanner.nextLine();
                     if (hasAgeRequirement(birthDate)){
                         employee.setDateOfBirth(birthDate);
@@ -169,9 +169,7 @@ public class DakPlusPlus {
             } else if (subChoice == 2) {
                 List<Project> projects = null;
                 try {
-                    System.out.println("Enter today's date: ");
-                    String date = scanner.nextLine();
-                    projects = projectService.getProjectsByStartDate(date);
+                    projects = projectService.getProjectsByStartDate();
                     projects.forEach(b -> System.out.println(b.toString()));
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...");
@@ -279,8 +277,6 @@ public class DakPlusPlus {
     }
 
     private static boolean hasAgeRequirement(String birthDate) {
-        //Scanner scanner = new Scanner(System.in);
-        //String birthDate = scanner.nextLine();
         LocalDate parsedBirthDate = LocalDate.parse(birthDate);
         long noOfDaysBetween = ChronoUnit.DAYS.between(parsedBirthDate, LocalDate.now());
         if( noOfDaysBetween >= 6570){

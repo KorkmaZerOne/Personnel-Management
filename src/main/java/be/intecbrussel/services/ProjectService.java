@@ -1,7 +1,6 @@
 package be.intecbrussel.services;
 
 import be.intecbrussel.data.ProjectDAO;
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
 
 import java.sql.SQLException;
@@ -15,9 +14,8 @@ public class ProjectService {
         List<Project> projects = projectDAO.getAllProjects();
         return projects;
     }
-    public List<Project> getProjectsByStartDate(String date) throws SQLException {
-        System.out.println("The projects which is start today");
-        return projectDAO.getProjectsByStartDate(date);
+    public List<Project> getProjectsByStartDate() throws SQLException {
+        return projectDAO.getProjectsByStartDate();
     }
     public boolean addProject(Project project) throws SQLException {
         return projectDAO.addProject(project);

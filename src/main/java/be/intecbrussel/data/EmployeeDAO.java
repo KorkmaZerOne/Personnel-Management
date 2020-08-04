@@ -9,7 +9,7 @@ public class EmployeeDAO {
 
     public List<Employee> getAllEmployees() throws SQLException {
 
-        Connection conn= ConnectionPort.getConnection();
+        Connection conn = ConnectionPort.getConnection();
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM Employees");
 
@@ -61,27 +61,37 @@ public class EmployeeDAO {
             employee.setLastName(rs.getString("LastName"));
             result.add(employee);
         }
-        return result;
-    }
 
-    public List<Employee> getEmployeesByBirthDate() throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
-        PreparedStatement statement = connection.prepareStatement("select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
-        ResultSet rs = statement.executeQuery();
-
-        List<Employee> result = new ArrayList<>();
-        while (rs.next()) {
-            Employee employee = new Employee();
-            employee.setFirstName(rs.getString("FirstName"));
-            employee.setLastName(rs.getString("LastName"));
-            employee.setPhoneNumber(rs.getString("PhoneNumber"));
-            employee.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
-            employee.setDateOfBirth(rs.getString("BirthDate"));
-            employee.setSalary(rs.getInt("Salary"));
-            result.add(employee);
+        if (result.isEmpty()) {
+            System.out.println("Employee you have searched is not exist");
+        } else {
+            return result;
         }
         return result;
     }
+        public List<Employee> getEmployeesByBirthDate () throws SQLException {
+            Connection connection = ConnectionPort.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
+            ResultSet rs = statement.executeQuery();
+
+            List<Employee> result = new ArrayList<>();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setFirstName(rs.getString("FirstName"));
+                employee.setLastName(rs.getString("LastName"));
+                employee.setPhoneNumber(rs.getString("PhoneNumber"));
+                employee.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
+                employee.setDateOfBirth(rs.getString("BirthDate"));
+                employee.setSalary(rs.getInt("Salary"));
+                result.add(employee);
+            }
+            if (result.isEmpty()){
+                System.out.println("There is no one you may celebrate birthday");
+            } else {
+                System.out.println("Celebrate the employee birthday");
+            }
+            return result;
+        }
 
     public boolean addEmployee(Employee employee) throws SQLException {
         try {

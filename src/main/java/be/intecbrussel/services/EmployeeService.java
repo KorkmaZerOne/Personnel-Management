@@ -14,8 +14,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(int id) throws SQLException {
-        Employee employee = employeeDAO.getEmployeeById(id);
-        return employee;
+        return employeeDAO.getEmployeeById(id);
     }
 
     public List<Employee> getEmployeesByName(String name) throws SQLException {
@@ -23,7 +22,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByBirthDate() throws SQLException {
-        System.out.println("Celebrate the employee birthday");
        return employeeDAO.getEmployeesByBirthDate();
     }
 

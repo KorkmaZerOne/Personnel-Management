@@ -25,8 +25,6 @@ public class ProjectDAO {
         return result;
     }
 
-
-
     public boolean addProject(Project project) throws SQLException {
         try {
             Connection connection = ConnectionPort.getConnection();
@@ -62,13 +60,12 @@ public class ProjectDAO {
         return true;
     }
 
-    public List<Project> getProjectsByStartDate(String date ) throws SQLException {
-            Connection connection = ConnectionPort.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE Date LIKE ?");
-            statement.setString(1, date);
-            ResultSet rs = statement.executeQuery();
+    public List<Project> getProjectsByStartDate() throws SQLException {
+        Connection connection = ConnectionPort.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE StartDate LIKE SYSDATE()");
+        ResultSet rs = statement.executeQuery();
 
-            List<Project> result = new ArrayList<>();
+        List<Project> result = new ArrayList<>();
         while (rs.next()) {
             Project project = new Project();
             project.setId(rs.getInt("Id"));
@@ -77,6 +74,11 @@ public class ProjectDAO {
             project.setPrice(rs.getInt("Price"));
             project.setEndDate(rs.getString("EndDate"));
             result.add(project);
+        }
+        if (result.isEmpty()) {
+            System.out.println("There is no projects start today");
+        } else {
+            System.out.println("The projects which is start today");
         }
         return result;
     }
