@@ -16,6 +16,7 @@ public class ProjectDAO {
         List<Project> result = new ArrayList<>();
         while (rs.next()) {
             Project project = new Project();
+            project.setId(rs.getInt("ProjectId"));
             project.setExplanation(rs.getString("Explanation"));
             project.setStartDate(rs.getString("StartDate"));
             project.setPrice(rs.getInt("Price"));
@@ -68,7 +69,7 @@ public class ProjectDAO {
         List<Project> result = new ArrayList<>();
         while (rs.next()) {
             Project project = new Project();
-            project.setId(rs.getInt("Id"));
+            project.setId(rs.getInt("ProjectId"));
             project.setStartDate(rs.getString("StartDate"));
             project.setExplanation(rs.getString("Explanation"));
             project.setPrice(rs.getInt("Price"));
