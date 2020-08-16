@@ -33,7 +33,7 @@ public class EmployeeService {
         return employeeDAO.updateEmployee(employee);
     }
 
-    public boolean deleteEmployee(int id) throws SQLException {
-        return employeeDAO.deleteEmployee(id);
+    public boolean deleteEmployee(int id , int userDeleteChoice) throws SQLException {
+        return employeeDAO.deleteEmployee(id , userDeleteChoice);
     }
 }

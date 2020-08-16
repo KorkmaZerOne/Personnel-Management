@@ -1,5 +1,6 @@
 package be.intecbrussel.data;
 
+import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,10 +19,50 @@ public class ProjectDAO {
             Project project = new Project();
             project.setId(rs.getInt("ProjectId"));
             project.setExplanation(rs.getString("Explanation"));
-            project.setStartDate(rs.getString("StartDate"));
+            project.setStartDate(rs.getDate("StartDate").toLocalDate());
             project.setPrice(rs.getInt("Price"));
-            project.setEndDate(rs.getString("EndDate"));
+            project.setEndDate(rs.getDate("EndDate").toLocalDate());
             result.add(project);
+        }
+        return result;
+    }
+
+    public Project getProjectById(int id) throws SQLException {
+        Connection connection = ConnectionPort.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE ProjectId = ?");
+        statement.setInt(1, id);
+        ResultSet rs = statement.executeQuery();
+
+        Project project = new Project();
+        while (rs.next()) {
+            project.setId(rs.getInt("ProjectId"));
+            project.setExplanation(rs.getString("Explanation"));
+            project.setStartDate(rs.getDate("StartDate").toLocalDate());
+            project.setPrice(rs.getInt("Price"));
+            project.setEndDate(rs.getDate("EndDate").toLocalDate());
+        }
+        return project;
+    }
+
+    public List<Project> getProjectsByStartDate() throws SQLException {
+        Connection connection = ConnectionPort.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE StartDate LIKE CURRENT_DATE()");
+        ResultSet rs = statement.executeQuery();
+
+        List<Project> result = new ArrayList<>();
+        while (rs.next()) {
+            Project project = new Project();
+            project.setId(rs.getInt("ProjectId"));
+            project.setStartDate(rs.getDate("StartDate").toLocalDate());
+            project.setExplanation(rs.getString("Explanation"));
+            project.setPrice(rs.getInt("Price"));
+            project.setEndDate(rs.getDate("EndDate").toLocalDate());
+            result.add(project);
+        }
+        if (result.isEmpty()) {
+            System.out.println("There is no projects start today");
+        } else {
+            System.out.println("The projects which is start today");
         }
         return result;
     }
@@ -46,41 +87,24 @@ public class ProjectDAO {
         return true;
     }
 
-    public boolean deleteProject(int id) throws SQLException {
+    public boolean deleteProject(int id , int userDeleteChoice) throws SQLException {
         try {
-            Connection connection = ConnectionPort.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "delete from Projects where ProjectId = ?"
-            );
-            statement.setInt(1, id);
-            statement.execute();
+            if (userDeleteChoice == 1) {
+                Connection connection = ConnectionPort.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "DELETE FROM Projects WHERE ProjectId = ?"
+                );
+                statement.setInt(1, id);
+                statement.execute();
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
-        return true;
     }
 
-    public List<Project> getProjectsByStartDate() throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE StartDate LIKE SYSDATE()");
-        ResultSet rs = statement.executeQuery();
 
-        List<Project> result = new ArrayList<>();
-        while (rs.next()) {
-            Project project = new Project();
-            project.setId(rs.getInt("ProjectId"));
-            project.setStartDate(rs.getString("StartDate"));
-            project.setExplanation(rs.getString("Explanation"));
-            project.setPrice(rs.getInt("Price"));
-            project.setEndDate(rs.getString("EndDate"));
-            result.add(project);
-        }
-        if (result.isEmpty()) {
-            System.out.println("There is no projects start today");
-        } else {
-            System.out.println("The projects which is start today");
-        }
-        return result;
-    }
 }

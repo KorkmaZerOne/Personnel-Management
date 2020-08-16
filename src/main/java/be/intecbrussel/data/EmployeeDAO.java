@@ -21,8 +21,8 @@ public class EmployeeDAO {
             employees.setLastName(rs.getString("LastName"));
             employees.setPhoneNumber(rs.getString("PhoneNumber"));
             employees.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
-            employees.setDateOfBirth(rs.getString("BirthDate"));
-            employees.setSalary(rs.getInt("Salary"));
+            employees.setDateOfBirth(rs.getDate("BirthDate").toLocalDate());
+            employees.setSalary(rs.getDouble("Salary"));
             result.add(employees);
         }
         return result;
@@ -35,15 +35,15 @@ public class EmployeeDAO {
         ResultSet rs = statement.executeQuery();
 
         Employee employees = new Employee();
-        while (rs.next()) {
-            employees.setId(rs.getInt("EmployeeId"));
-            employees.setFirstName(rs.getString("FirstName"));
-            employees.setLastName(rs.getString("LastName"));
-            employees.setPhoneNumber(rs.getString("PhoneNumber"));
-            employees.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
-            employees.setDateOfBirth(rs.getString("BirthDate"));
-            employees.setSalary(rs.getInt("Salary"));
-        }
+            while (rs.next()) {
+                employees.setId(rs.getInt("EmployeeId"));
+                employees.setFirstName(rs.getString("FirstName"));
+                employees.setLastName(rs.getString("LastName"));
+                employees.setPhoneNumber(rs.getString("PhoneNumber"));
+                employees.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
+                employees.setDateOfBirth(rs.getDate("BirthDate").toLocalDate());
+                employees.setSalary(rs.getDouble("Salary"));
+            }
         return employees;
     }
 
@@ -71,7 +71,10 @@ public class EmployeeDAO {
     }
         public List<Employee> getEmployeesByBirthDate () throws SQLException {
             Connection connection = ConnectionPort.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from Employees E where DATEDIFF(SYSDATE(), E.BirthDate)%365<=7");
+            PreparedStatement statement = connection.prepareStatement("select * from Employees E where " +
+                    "DATE_ADD(BirthDate, INTERVAL YEAR(CURDATE())-YEAR(BirthDate) + " +
+                    "IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(BirthDate) ,1,0) YEAR) " +
+                    "BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)");
             ResultSet rs = statement.executeQuery();
 
             List<Employee> result = new ArrayList<>();
@@ -81,8 +84,8 @@ public class EmployeeDAO {
                 employee.setLastName(rs.getString("LastName"));
                 employee.setPhoneNumber(rs.getString("PhoneNumber"));
                 employee.setPhoneNumberICE(rs.getString("PhoneNumberICE"));
-                employee.setDateOfBirth(rs.getString("BirthDate"));
-                employee.setSalary(rs.getInt("Salary"));
+                employee.setDateOfBirth(rs.getDate("BirthDate").toLocalDate());
+                employee.setSalary(rs.getDouble("Salary"));
                 result.add(employee);
             }
             if (result.isEmpty()){
@@ -110,7 +113,7 @@ public class EmployeeDAO {
             statement.execute();
         }
         catch (SQLException e ) {
-            System.out.println("An error has occurred on Table..." + e.getMessage());
+            System.out.println("An error has occurred on Table..." + "INSERT OBLIGATE FIELDS "+ e.getMessage());
             return false;
         }
         return true;
@@ -120,13 +123,14 @@ public class EmployeeDAO {
         try {
             Connection connection = ConnectionPort.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "update Employees set \n" +
-                            "FirstName=\n'" +employee.getFirstName()+"',"+
-                            "LastName= \n'" +employee.getLastName()+"',"+
-                            "PhoneNumber=\n'" +employee.getPhoneNumber()+"',"+
-                            "PhoneNumberICE=\n'" +employee.getPhoneNumberICE()+"',"+
-                            "BirthDate=\n'" +employee.getDateOfBirth()+"',"+
-                            "Salary=\n" +employee.getSalary()+
+                    "UPDATE Employees SET " +
+                            "EmployeeId='" + employee.getId()+"',"+
+                            "FirstName='" +employee.getFirstName()+"',"+
+                            "LastName='" +employee.getLastName()+"',"+
+                            "PhoneNumber='" +employee.getPhoneNumber()+"',"+
+                            "PhoneNumberICE='" +employee.getPhoneNumberICE()+"',"+
+                            "BirthDate='" +employee.getDateOfBirth()+"',"+
+                            "Salary=" +employee.getSalary()+
                             " where EmployeeId = "+employee.getId()
             );
             statement.execute();
@@ -138,19 +142,23 @@ public class EmployeeDAO {
         return true;
     }
 
-    public boolean deleteEmployee(int id) throws SQLException {
+    public boolean deleteEmployee(int id , int userDeleteChoice) throws SQLException {
         try {
-            Connection connection = ConnectionPort.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "delete from Employees where EmployeeId = ?"
-            );
-            statement.setInt(1, id);
-            statement.execute();
+            if ( userDeleteChoice == 1) {
+                Connection connection = ConnectionPort.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "DELETE FROM Employees WHERE EmployeeId = ?"
+                );
+                statement.setInt(1, id);
+                statement.execute();
+                return true;
+            } else {
+                return false;
+            }
         }
         catch (SQLException e ) {
             System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
-        return true;
     }
 }

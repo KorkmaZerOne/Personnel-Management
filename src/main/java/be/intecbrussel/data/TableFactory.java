@@ -9,14 +9,15 @@ public class TableFactory {
     public void createEmployeeTable() {
         String sqlEmployee = "CREATE TABLE IF NOT EXISTS Employees\n" +
                 "(\n" +
-                "   EmployeeId int PRIMARY KEY NOT NULL,\n" +
+                "   EmployeeId int PRIMARY KEY NOT NULL AUTO_INCREMENT,\n" +
                 "   FirstName varchar(30) NOT NULL CHECK (FirstName <> ''), \n" +
                 "   LastName varchar(30) NOT NULL CHECK (LastName <> ''),\n" +
                 "   PhoneNumber varchar(11),\n" +
                 "   PhoneNumberICE varchar(11),\n" +
                 "   BirthDate date,\n" +
-                "   Salary int\n" +
+                "   Salary Double\n" +
                 ")";
+
         try {
             Connection conn = ConnectionPort.getConnection();
             Statement statement = conn.createStatement();
@@ -30,7 +31,7 @@ public class TableFactory {
     }
     public void createProjectsTable() {
         String sqlProjects = "CREATE TABLE IF NOT EXISTS Projects ("
-                + " ProjectId int PRIMARY KEY NOT NULL, "
+                + " ProjectId int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
                 + " Explanation varchar(200), "
                 + " StartDate date, "
                 + " Price int, "

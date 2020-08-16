@@ -1,7 +1,6 @@
 package be.intecbrussel.services;
 
 import be.intecbrussel.data.WorkDoneDAO;
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.WorkDone;
 
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ public class WorkDoneService {
     }
 
     public List<WorkDone> getWorkDoneByEmployee(int employeeId, int projectId) throws SQLException {
-        List<WorkDone> workDone = workDoneDAO.getWorkDoneByEmployee(employeeId, projectId);
+        List<WorkDone> workDone = workDoneDAO.getWorkDoneById(employeeId, projectId);
         return workDone;
     }
 

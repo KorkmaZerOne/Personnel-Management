@@ -1,10 +1,13 @@
 package be.intecbrussel.model;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class WorkDone {
 
     private int employeeId;
     private int projectId;
-    private String date;
+    private LocalDate date;
     private int workingHours;
     private String remarks;
 
@@ -24,16 +27,19 @@ public class WorkDone {
         this.projectId = projectId;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
     public int getWorkingHours() {
-        return workingHours;
+        /*Project project = new Project();
+        WorkDone workDone = new WorkDone();
+        int workingHours = (int) (ChronoUnit.DAYS.between(workDone.getDate() , project.getEndDate())/30 * 22 * 8);
+        */return workingHours;
     }
 
     public void setWorkingHours(int workingHours) {

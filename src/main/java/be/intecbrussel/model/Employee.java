@@ -1,5 +1,6 @@
 package be.intecbrussel.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Employee {
@@ -9,9 +10,8 @@ public class Employee {
     private String lastName;
     private String phoneNumber;
     private String phoneNumberICE;
-    private String dateOfBirth ;
-    private int salary;
-
+    private LocalDate dateOfBirth ;
+    private double salary;
 
     public int getId() {
         return id;
@@ -53,19 +53,19 @@ public class Employee {
         this.phoneNumberICE = phoneNumberICE;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 

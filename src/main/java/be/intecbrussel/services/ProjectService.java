@@ -1,6 +1,7 @@
 package be.intecbrussel.services;
 
 import be.intecbrussel.data.ProjectDAO;
+import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
 
 import java.sql.SQLException;
@@ -14,6 +15,10 @@ public class ProjectService {
         List<Project> projects = projectDAO.getAllProjects();
         return projects;
     }
+    public Project getProjectById(int id) throws SQLException {
+        return projectDAO.getProjectById(id);
+    }
+
     public List<Project> getProjectsByStartDate() throws SQLException {
         return projectDAO.getProjectsByStartDate();
     }
@@ -21,7 +26,7 @@ public class ProjectService {
         return projectDAO.addProject(project);
     }
 
-    public boolean deleteProject(int id) throws SQLException {
-        return projectDAO.deleteProject(id);
+    public boolean deleteProject(int id , int userDeleteChoice) throws SQLException {
+        return projectDAO.deleteProject(id , userDeleteChoice);
     }
 }
