@@ -367,7 +367,6 @@ public class DakPlusPlus {
                 Project project = new Project();
                 Employee employee = new Employee();
 
-                // workDone.setProjectId((scanner.nextInt()));
                 int employeeId;
                 System.out.println("Enter employee ID which is you want to add to WorkDone: ");
                 do {
@@ -378,6 +377,7 @@ public class DakPlusPlus {
                         System.out.println("Write the employee ID which is you want to add to WorkDone: ");
                     } else {
                         System.out.println("Employee who is you want to add to WorkDone: ");
+                        workDone.setEmployeeId(employeeId);
                         System.out.println(employee.toString());
                     }
                 } while (employeeId != employee.getId());
@@ -392,6 +392,7 @@ public class DakPlusPlus {
                         System.out.println("Write the Project ID which is you want to add WorkDone");
                     } else {
                         System.out.println("Project which is you want to add to WorkDone");
+                        workDone.setProjectId(projectId);
                         System.out.println(project.toString());
                     }
                 } while (projectId != project.getId());
@@ -399,7 +400,6 @@ public class DakPlusPlus {
                 LocalDate localWorkDoneStartDate;
                 System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
                 do {
-                    System.out.println("Start Date ( yyyy-MM-dd): ");
                     String workDoneStartDate = scanner.next();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     localWorkDoneStartDate = LocalDate.parse(workDoneStartDate, formatter);
@@ -409,29 +409,73 @@ public class DakPlusPlus {
                         System.out.println("The WorkDone start date has to be started after at project start day");
                     }
                 } while (!localWorkDoneStartDate.isAfter(project.getStartDate()));
-                int workingHours = (int) (ChronoUnit.DAYS.between(localWorkDoneStartDate, project.getEndDate())/30 * 22 * 8);
+                int workingHours = (int) ((ChronoUnit.DAYS.between(project.getEndDate() , localWorkDoneStartDate))/30 * 22 * 8);
                 workDone.setWorkingHours( workingHours);
                 System.out.println("HoursWorked: " + workDone.getWorkingHours());
                 System.out.println("Enter remarks for WorkDone: ");
-                workDone.setRemarks(scanner.nextLine());
+                workDone.setRemarks(scanner.next());
                 boolean result = workDoneService.addWorkDone(workDone);
                 System.out.println(result ? "THE WORKDONE WAS ADDED" : "Error");
 
-            }/*else if (subChoice == 4) {
+            }else if (subChoice == 4) {
             try {
-                System.out.println("Enter employee ID: ");
-                int employeeId = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter project ID: ");
-                int projectId = Integer.parseInt(scanner.nextLine());
-                WorkDone workDone = workDoneService.getWorkDoneByProject(employeeId, projectId);
-                System.out.println("Date (dd-MM-yyyy): ");
-                workDone.setDate(scanner.nextLine());
-                System.out.println("HoursWorked: ");
-                workDone.setWorkingHours(scanner.nextInt());
-                System.out.println("Remarks: ");
-                workDone.setRemarks(scanner.nextLine());
+                WorkDone workDone = new WorkDone();
+                EmployeeService employeeService = new EmployeeService();
+                ProjectService projectService = new ProjectService();
+                Project project = new Project();
+                Employee employee = new Employee();
+
+                int employeeId;
+                System.out.println("Enter employee ID in order to update WorkDone: ");
+
+                do {
+                    employeeId = scanner.nextInt();
+                    employee = employeeService.getEmployeeById(employeeId);
+                    if (employeeId != employee.getId()) {
+                        System.out.println("!!EmployeeId you have searched is not exist");
+                        System.out.println("Write the employee ID: ");
+                    } else {
+                        System.out.println("Employee who is you have updated for WorkDone: ");
+                        workDone.setEmployeeId(employeeId);
+                        System.out.println(employee.toString());
+                    }
+                } while (employeeId != employee.getId());
+
+                int projectId;
+                System.out.println("Enter project ID in order to update WorkDone: ");
+                do {
+                    projectId = scanner.nextInt();
+                    project = projectService.getProjectById(projectId);
+                    if (projectId != project.getId()) {
+                        System.out.println("!!ProjectId you have searched is not exist");
+                        System.out.println("Write the Project ID which is you want to update");
+                    } else {
+                        System.out.println("Project which is you have updated for WorkDone: ");
+                        workDone.setProjectId(projectId);
+                        System.out.println(project.toString());
+                    }
+                } while (projectId != project.getId());
+
+                LocalDate localWorkDoneStartDate;
+                System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
+                do {
+                    String workDoneStartDate = scanner.next();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    localWorkDoneStartDate = LocalDate.parse(workDoneStartDate, formatter);
+                    if (localWorkDoneStartDate.isAfter(project.getStartDate())) {
+                        workDone.setDate(localWorkDoneStartDate);
+                    } else {
+                        System.out.println("The WorkDone start date has to be started after at project start day");
+                    }
+                } while (!localWorkDoneStartDate.isAfter(project.getStartDate()));
+                int workingHours = (int) ((ChronoUnit.DAYS.between(project.getEndDate() , localWorkDoneStartDate))/30 * 22 * 8);
+                workDone.setWorkingHours( workingHours);
+                System.out.println("HoursWorked: " + workDone.getWorkingHours());
+                System.out.println("Enter remarks for WorkDone: ");
+                workDone.setRemarks(scanner.next());
+
                 boolean result = workDoneService.updateWorkDone(workDone);
-                System.out.println(result ? "THE WORKDONE LIST WAS UPDATED" : "Error");
+                System.out.println(result ? "THE WORKDONE WAS UPDATED" : "Error");
 
             } catch (SQLException ignored) {
                 System.out.println("Problems with db...: " + ignored.getMessage());
@@ -446,7 +490,7 @@ public class DakPlusPlus {
             System.out.println(result ? "THE WORKDONE WAS DELETED" : "Error");
         } else if (subChoice == 6) {
             showMenu();
-        }*/
+        }
     }
 
 }

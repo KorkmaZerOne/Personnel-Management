@@ -52,9 +52,7 @@ public class TableFactory {
                     + " ProjectId int ,"
                     + " Date date ,"
                     + " HoursWorked int ,"
-                    + " Remarks varchar(100) ,"
-                    + " FOREIGN KEY (EmployeeId) REFERENCES Employees (EmployeeId) ,"
-                    + " FOREIGN KEY (ProjectId) REFERENCES Projects (ProjectId) "
+                    + " Remarks varchar(100) "
                     + ")";
             try {
                 Connection conn = ConnectionPort.getConnection();
