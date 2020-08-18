@@ -49,10 +49,9 @@ public class WorkDoneDAO {
     public WorkDone getWorkDoneByTwoId(int projectId , int employeeId) throws SQLException {
         Connection connection = ConnectionPort.getConnection();
         PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM WorkDone WHERE ProjectId =" +  projectId + "AND EmployeeId =" + employeeId
-        );
-       // statement.setInt(1, employeeId);
-        //statement.setInt(2, projectId);
+                "SELECT * FROM WorkDone WHERE ProjectId = ? AND EmployeeId = ?");
+        statement.setInt(1, employeeId);
+        statement.setInt(2, projectId);
        ResultSet rs = statement.executeQuery();
 
         WorkDone workDone = new WorkDone();

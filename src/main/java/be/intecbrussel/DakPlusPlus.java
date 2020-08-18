@@ -442,16 +442,15 @@ public class DakPlusPlus {
                     Employee employee = new Employee();
 
                     int projectId;
-                    int employeeId;
-                    System.out.println("Enter PROJECT ID in order to update WorkDone: ");
 
+                    System.out.println("Enter PROJECT ID in order to update WorkDone: ");
                     //Employee employee;
                     //System.out.println("Write the employee ID which is you want to delete");
 
                     do {
                         projectId = scanner.nextInt();
                         //workDoneService.getWorkDoneByProjectId(projectId);
-                        projectService.getProjectById(projectId);
+                        project = projectService.getProjectById(projectId);
                       //  workDones = workDoneService.getWorkDoneByProjectId(projectId);
                        // System.out.println("WORKDONE LIST BASED ON PROJECT ID: ");
                       //  workDones.forEach(b -> System.out.println(b.toString()));
@@ -460,20 +459,22 @@ public class DakPlusPlus {
                       //  workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
                        // System.out.println("WORKDONE BASED ON PROJECT AND EMPLOYEE ID: ");
                       //  System.out.println(workDone);
-                        if (projectId != workDone.getProjectId()) {
-                            System.out.println(workDone.getProjectId());
+                        if (projectId != project.getId()) {
+                            System.out.println(project.getId());
                             System.out.println("!!ProjectId you have searched is not exist");
                             System.out.println("Enter the Project ID: ");
                         } else {
                             System.out.println("WORKDONE LIST BASED ON PROJECT ID: ");
                             workDones = workDoneService.getWorkDoneByProjectId(projectId);
                             workDones.forEach(b -> System.out.println(b.toString()));
+                            System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
                         }
-                    } while (projectId != workDone.getProjectId());
+                    } while (projectId != project.getId());
 
-                    System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
+                    int employeeId;
                     do {
                         employeeId = scanner.nextInt();
+                        projectId = project.getId();
                         workDone = workDoneService.getWorkDoneByTwoId(projectId , employeeId);
 
                         if (employeeId != employee.getId()) {
@@ -483,10 +484,10 @@ public class DakPlusPlus {
                             System.out.println("WORKDONE LIST BASED ON PROJECT ID AND EMPLOYEE ID: ");
                             workDone = workDoneService.getWorkDoneByTwoId(projectId , employeeId);
                             System.out.println(workDone.toString());
+                            System.out.println("Enter NEW PROJECT ID in order to update WorkDone: ");
                         }
                     } while (employeeId != workDone.getEmployeeId());
 
-                    System.out.println("Enter NEW PROJECT ID in order to update WorkDone: ");
                     do {
                         projectId = scanner.nextInt();
                         project = projectService.getProjectById(projectId);
@@ -498,10 +499,10 @@ public class DakPlusPlus {
                             System.out.println("Project which is you want to choice for WorkDone: ");
                             workDone.setProjectId(projectId);
                             System.out.println(project.toString());
+                            System.out.println("Enter NEW EMPLOYEE ID in order to update WorkDone: ");
                         }
                     } while (projectId != project.getId());
 
-                    System.out.println("Enter NEW EMPLOYEE ID in order to update WorkDone: ");
                     do {
                         employeeId = scanner.nextInt();
                         employee = employeeService.getEmployeeById(employeeId);
@@ -512,13 +513,15 @@ public class DakPlusPlus {
                             System.out.println("Employee who is you want to add to WorkDone: ");
                             workDone.setEmployeeId(employeeId);
                             System.out.println(employee.toString());
+                            System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
                         }
                     } while (employeeId != employee.getId());
 
                     LocalDate localWorkDoneStartDate;
+                    String workDoneStartDate;
                     System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
                     do {
-                        String workDoneStartDate = scanner.next();
+                        workDoneStartDate = scanner.next();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         localWorkDoneStartDate = LocalDate.parse(workDoneStartDate, formatter);
                         if (localWorkDoneStartDate.isAfter(project.getStartDate())) {
