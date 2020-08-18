@@ -476,8 +476,9 @@ public class DakPlusPlus {
                         employeeId = scanner.nextInt();
                         projectId = project.getId();
                         workDone = workDoneService.getWorkDoneByTwoId(projectId , employeeId);
-
+                        System.out.println(workDone);
                         if (employeeId != employee.getId()) {
+                            System.out.println(employee.getId());
                             System.out.println("!!Employee ID you have searched is not exist");
                             System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
                         } else {
