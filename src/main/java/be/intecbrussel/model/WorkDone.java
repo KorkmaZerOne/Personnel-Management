@@ -36,10 +36,7 @@ public class WorkDone {
     }
 
     public int getWorkingHours() {
-        /*Project project = new Project();
-        WorkDone workDone = new WorkDone();
-        int workingHours = (int) (ChronoUnit.DAYS.between(workDone.getDate() , project.getEndDate())/30 * 22 * 8);
-        */return workingHours;
+        return workingHours;
     }
 
     public void setWorkingHours(int workingHours) {

@@ -14,13 +14,13 @@ public class WorkDoneService {
         return workDone;
     }
 
-    public List<WorkDone> getWorkDoneByEmployee(int employeeId, int projectId) throws SQLException {
-        List<WorkDone> workDone = workDoneDAO.getWorkDoneById(employeeId, projectId);
+    public List <WorkDone> getWorkDoneByProjectId(int projectId) throws SQLException {
+        List<WorkDone> workDone = workDoneDAO.getWorkDoneByProjectId(projectId);
         return workDone;
     }
 
-    public WorkDone getWorkDoneByProject(int employeeId, int projectId) throws SQLException {
-        WorkDone workDone = workDoneDAO.getWorkDoneByProject(employeeId, projectId);
+    public WorkDone getWorkDoneByTwoId(int projectId , int employeeId) throws SQLException {
+        WorkDone workDone = workDoneDAO.getWorkDoneByTwoId(projectId , employeeId );
         return workDone;
     }
 
