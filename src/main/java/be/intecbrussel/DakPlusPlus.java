@@ -226,6 +226,7 @@ public class DakPlusPlus {
                         } else {
                             System.out.println("Employee who is you want to delete");
                             System.out.println(employee.toString());
+                            System.out.println("ARE YOU SURE TO DELETE EMPLOYEE");
                             deleteMenu();
                             userDeleteChoice = scanner.nextInt();
                         }
@@ -329,6 +330,7 @@ public class DakPlusPlus {
                         } else {
                             System.out.println("Project which is you want to delete");
                             System.out.println(project.toString());
+                            System.out.println("ARE YOU SURE TO DELETE PROJECT");
                             deleteMenu();
                             userDeleteChoice = scanner.nextInt();
                         }
@@ -355,7 +357,7 @@ public class DakPlusPlus {
                     System.out.println(" Problems with db..." + ignored.getMessage());
                 }
             } else if (subChoice == 2) {
-                List <WorkDone> workDone = null;
+                List<WorkDone> workDone = null;
                 try {
                     System.out.println("Enter PROJECT ID for checking");
                     System.out.println("Project ID: ");
@@ -371,8 +373,8 @@ public class DakPlusPlus {
                 ProjectService projectService = new ProjectService();
                 List<Project> projects;
                 Project project;
-                List <Employee> employees;
-                Employee employee ;
+                List<Employee> employees;
+                Employee employee;
                 employees = employeeService.getAllEmployees();
                 employees.forEach(b -> System.out.println(b.toString()));
                 int employeeId;
@@ -434,7 +436,7 @@ public class DakPlusPlus {
                     workDones = workDoneService.getAllWorkDone();
                     workDones.forEach(b -> System.out.println(b.toString()));
 
-                    workDones = new ArrayList<>();
+                    //workDones = new ArrayList<>();
                     WorkDone workDone = new WorkDone();
                     EmployeeService employeeService = new EmployeeService();
                     ProjectService projectService = new ProjectService();
@@ -442,23 +444,13 @@ public class DakPlusPlus {
                     Employee employee = new Employee();
 
                     int projectId;
-
+                    int updatedProjectId;
+                    int updatedEmployeeId;
                     System.out.println("Enter PROJECT ID in order to update WorkDone: ");
-                    //Employee employee;
-                    //System.out.println("Write the employee ID which is you want to delete");
 
                     do {
                         projectId = scanner.nextInt();
-                        //workDoneService.getWorkDoneByProjectId(projectId);
                         project = projectService.getProjectById(projectId);
-                      //  workDones = workDoneService.getWorkDoneByProjectId(projectId);
-                       // System.out.println("WORKDONE LIST BASED ON PROJECT ID: ");
-                      //  workDones.forEach(b -> System.out.println(b.toString()));
-                      //  System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
-                       // employeeId = scanner.nextInt();
-                      //  workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
-                       // System.out.println("WORKDONE BASED ON PROJECT AND EMPLOYEE ID: ");
-                      //  System.out.println(workDone);
                         if (projectId != project.getId()) {
                             System.out.println(project.getId());
                             System.out.println("!!ProjectId you have searched is not exist");
@@ -471,33 +463,33 @@ public class DakPlusPlus {
                         }
                     } while (projectId != project.getId());
 
+                    updatedProjectId = projectId;
                     int employeeId;
                     do {
                         employeeId = scanner.nextInt();
                         projectId = project.getId();
-                        workDone = workDoneService.getWorkDoneByTwoId(projectId , employeeId);
-                        System.out.println(workDone);
-                        if (employeeId != employee.getId()) {
+                        workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
+                        if (employeeId != workDone.getEmployeeId()) {
                             System.out.println(employee.getId());
                             System.out.println("!!Employee ID you have searched is not exist");
                             System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
                         } else {
                             System.out.println("WORKDONE LIST BASED ON PROJECT ID AND EMPLOYEE ID: ");
-                            workDone = workDoneService.getWorkDoneByTwoId(projectId , employeeId);
+                            workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
                             System.out.println(workDone.toString());
                             System.out.println("Enter NEW PROJECT ID in order to update WorkDone: ");
                         }
                     } while (employeeId != workDone.getEmployeeId());
-
+                    updatedEmployeeId = employeeId;
                     do {
                         projectId = scanner.nextInt();
                         project = projectService.getProjectById(projectId);
-                        System.out.println(project.toString());
+
                         if (projectId != project.getId()) {
                             System.out.println("!!Project ID you have searched is not exist");
                             System.out.println("Write the Project ID");
                         } else {
-                            System.out.println("Project which is you want to choice for WorkDone: ");
+                            System.out.println("PROJECT WHICH IS YOU WANT TO CHOICE FOR WORKDONE: ");
                             workDone.setProjectId(projectId);
                             System.out.println(project.toString());
                             System.out.println("Enter NEW EMPLOYEE ID in order to update WorkDone: ");
@@ -511,7 +503,7 @@ public class DakPlusPlus {
                             System.out.println("!!EmployeeId you have searched is not exist");
                             System.out.println("Write the employee ID which is you want to add to WorkDone: ");
                         } else {
-                            System.out.println("Employee who is you want to add to WorkDone: ");
+                            System.out.println("EMPLOYEE WHO IS YOU WANT TO ADD WORKDONE: ");
                             workDone.setEmployeeId(employeeId);
                             System.out.println(employee.toString());
                             System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
@@ -520,7 +512,6 @@ public class DakPlusPlus {
 
                     LocalDate localWorkDoneStartDate;
                     String workDoneStartDate;
-                    System.out.println("WorkDone Start Date (yyyy-MM-dd): ");
                     do {
                         workDoneStartDate = scanner.next();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -531,13 +522,13 @@ public class DakPlusPlus {
                             System.out.println("The WorkDone start date has to be started after at project start day");
                         }
                     } while (!localWorkDoneStartDate.isAfter(project.getStartDate()));
-                    int workingHours = (int) ((ChronoUnit.DAYS.between(project.getEndDate(), localWorkDoneStartDate)) / 30.00 * 22 * 8);
+                    int workingHours = (int) ((ChronoUnit.DAYS.between(localWorkDoneStartDate, project.getEndDate())) / 30.00 * 22 * 8);
                     workDone.setWorkingHours(workingHours);
                     System.out.println("HoursWorked: " + workDone.getWorkingHours());
                     System.out.println("Enter remarks for WorkDone: ");
                     workDone.setRemarks(scanner.next());
 
-                    boolean result = workDoneService.updateWorkDone(workDone);
+                    boolean result = workDoneService.updateWorkDone(workDone, updatedProjectId, updatedEmployeeId);
                     System.out.println(result ? "THE WORKDONE WAS UPDATED" : "Error");
 
                 } catch (SQLException ignored) {
@@ -545,12 +536,71 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 5) {
-                System.out.println("Enter employee ID: ");
-                int employeeId = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter project ID: ");
-                int projectId = Integer.parseInt(scanner.nextLine());
-                boolean result = workDoneService.deleteWorkDone(employeeId, projectId);
-                System.out.println(result ? "THE WORKDONE WAS DELETED" : "Error");
+
+                List<WorkDone> workDones;
+                try {
+                    System.out.println("WORKDONE LIST");
+                    workDones = workDoneService.getAllWorkDone();
+                    workDones.forEach(b -> System.out.println(b.toString()));
+
+                    //workDones = new ArrayList<>();
+                    WorkDone workDone = new WorkDone();
+                    EmployeeService employeeService = new EmployeeService();
+                    ProjectService projectService = new ProjectService();
+                    Project project = new Project();
+                    Employee employee = new Employee();
+
+                    int projectId;
+                    int updatedProjectId;
+                    int updatedEmployeeId;
+                    System.out.println("ENTER PROJECT ID IN ORDER TO DELETE FROM WORKDONE: ");
+
+                    do {
+                        projectId = scanner.nextInt();
+                        project = projectService.getProjectById(projectId);
+                        if (projectId != project.getId()) {
+                            System.out.println("!!ProjectId you have searched is not exist");
+                            System.out.println("ENTER THE CORRECT PROJECT ID: ");
+                        } else {
+                            System.out.println("WORKDONE LIST BASED ON PROJECT ID: ");
+                            workDones = workDoneService.getWorkDoneByProjectId(projectId);
+                            workDones.forEach(b -> System.out.println(b.toString()));
+                            System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
+                        }
+                    } while (projectId != project.getId());
+
+                    updatedProjectId = projectId;
+                    int userDeleteChoice = 0;
+                    int employeeId;
+                    do {
+                        employeeId = scanner.nextInt();
+                        projectId = project.getId();
+                        workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
+                        if (employeeId != workDone.getEmployeeId()) {
+                            System.out.println(employee.getId());
+                            System.out.println("!!Employee ID you have searched is not exist");
+                            System.out.println("Enter EMPLOYEE ID for current WorkDone: ");
+                        } else {
+                            System.out.println("WORKDONE LIST BASED ON PROJECT ID AND EMPLOYEE ID: ");
+                            workDone = workDoneService.getWorkDoneByTwoId(projectId, employeeId);
+                            System.out.println(workDone.toString());
+                            System.out.println("ARE YOU SURE TO DELETE WORKDONE: ");
+                            deleteMenu();
+                            userDeleteChoice = scanner.nextInt();
+
+                        }
+                    } while (employeeId != workDone.getEmployeeId());
+                    boolean result = workDoneService.deleteWorkDone(projectId , employeeId , userDeleteChoice);
+                    System.out.println(result ? "THE PROJECT WAS DELETED" : "NOT DELETED");
+                } catch (SQLException ignored) {
+                    System.out.println("Problems with db...: " + ignored.getMessage());
+                    ignored.printStackTrace();
+                }
+
+
+
+
+
             } else if (subChoice == 6) {
                 showMenu();
             }
@@ -618,7 +668,6 @@ public class DakPlusPlus {
     }
 
     private static void deleteMenu() {
-        System.out.println("Are you sure to delete?");
         System.out.println("0. NO");
         System.out.println("1. YES");
     }

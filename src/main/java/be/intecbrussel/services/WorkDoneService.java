@@ -28,11 +28,11 @@ public class WorkDoneService {
             return workDoneDAO.addWorkDone(workDone);
         }
 
-    public boolean updateWorkDone (WorkDone workDone) throws SQLException {
-            return workDoneDAO.updateWorkDone(workDone);
+    public boolean updateWorkDone (WorkDone workDone, int updatedProjectId , int updatedEmployeeId) throws SQLException {
+            return workDoneDAO.updateWorkDone(workDone , updatedProjectId , updatedEmployeeId );
         }
 
-    public boolean deleteWorkDone(int employeeId, int projectId) {
-            return workDoneDAO.deleteWorkDone(employeeId , projectId);
+    public boolean deleteWorkDone(int projectId , int employeeId, int userDeleteChoice ) {
+            return workDoneDAO.deleteWorkDone(projectId , employeeId , userDeleteChoice);
         }
 }

@@ -50,8 +50,8 @@ public class WorkDoneDAO {
         Connection connection = ConnectionPort.getConnection();
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT * FROM WorkDone WHERE ProjectId = ? AND EmployeeId = ?");
-        statement.setInt(1, employeeId);
-        statement.setInt(2, projectId);
+        statement.setInt(1, projectId);
+        statement.setInt(2, employeeId);
        ResultSet rs = statement.executeQuery();
 
         WorkDone workDone = new WorkDone();
@@ -86,7 +86,7 @@ public class WorkDoneDAO {
 
     }
 
-    public boolean updateWorkDone(WorkDone workDone) {
+    public boolean updateWorkDone(WorkDone workDone , int updatedProjectId , int updatedEmployeeId) {
         try {
             Connection connection = ConnectionPort.getConnection();
             PreparedStatement statement = connection.prepareStatement(
@@ -96,8 +96,8 @@ public class WorkDoneDAO {
                             "Date=\n'" + workDone.getDate() + "'," +
                             "HoursWorked=\n'" + workDone.getWorkingHours() + "'," +
                             "Remarks=\n'" + workDone.getRemarks() +
-                            " WHERE EmployeeId = " + workDone.getEmployeeId() +
-                            "AND ProjectId = " + workDone.getProjectId()
+                            "' WHERE EmployeeId = " + updatedEmployeeId +
+                            " AND ProjectId = " + updatedProjectId
             );
             statement.execute();
         } catch (SQLException e) {
@@ -107,22 +107,26 @@ public class WorkDoneDAO {
         return true;
     }
 
-    public boolean deleteWorkDone(int projectId , int employeeId) {
+    public boolean deleteWorkDone(int projectId , int employeeId , int userDeleteChoice) {
         try {
-            Connection connection = ConnectionPort.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM WorkDone WHERE ProjectId =" +  projectId + "AND EmployeeId =" + employeeId
-            );
-            //statement.setInt(1, employeeId);
-            //statement.setInt(2, projectId);
+            if (userDeleteChoice == 1) {
+                Connection connection = ConnectionPort.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "DELETE FROM WorkDone WHERE ProjectId = ? AND EmployeeId = ?"
+                );
+                statement.setInt(1, projectId);
+                statement.setInt(2, employeeId);
+                statement.execute();
 
-            statement.execute();
+                return true;
+            } else {
+                return false;
+            }
         }
         catch (SQLException e ) {
             System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }
-        return true;
     }
 }
 
