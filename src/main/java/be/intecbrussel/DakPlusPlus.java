@@ -422,7 +422,7 @@ public class DakPlusPlus {
                         System.out.println("The WorkDone start date has to be started after at project start day");
                     }
                 } while (!localWorkDoneStartDate.isAfter(project.getStartDate()));
-                int workingHours = (int) ((ChronoUnit.DAYS.between(localWorkDoneStartDate, project.getEndDate())) / 30.00 * 22 * 8);
+                int workingHours = (int) ((ChronoUnit.DAYS.between(localWorkDoneStartDate, project.getEndDate())) / 30.00 * (22 * 8));
                 workDone.setWorkingHours(workingHours);
                 System.out.println("HoursWorked: " + workDone.getWorkingHours());
                 System.out.println("Enter remarks for WorkDone: ");

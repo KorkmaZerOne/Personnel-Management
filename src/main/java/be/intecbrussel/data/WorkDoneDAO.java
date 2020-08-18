@@ -65,6 +65,26 @@ public class WorkDoneDAO {
         return workDone;
     }
 
+    public List<WorkDone> getAllWorkDoneByProfitability() throws SQLException {
+
+        Connection connection = ConnectionPort.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone WHERE ");
+
+        List<WorkDone> result = new ArrayList<>();
+        while (rs.next()) {
+            WorkDone workDone = new WorkDone();
+            workDone.setEmployeeId(rs.getInt("EmployeeId"));
+            workDone.setProjectId(rs.getInt("ProjectId"));
+            workDone.setDate(rs.getDate("Date").toLocalDate());
+            workDone.setWorkingHours(rs.getInt("HoursWorked"));
+            workDone.setRemarks(rs.getString("Remarks"));
+            result.add(workDone);
+        }
+        return result;
+    }
+
+
     public boolean addWorkDone(WorkDone workDone) {
         try {
             Connection connection = ConnectionPort.getConnection();
