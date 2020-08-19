@@ -15,6 +15,7 @@ public class ProjectService {
         List<Project> projects = projectDAO.getAllProjects();
         return projects;
     }
+
     public Project getProjectById(int id) throws SQLException {
         return projectDAO.getProjectById(id);
     }
@@ -22,11 +23,12 @@ public class ProjectService {
     public List<Project> getProjectsByStartDate() throws SQLException {
         return projectDAO.getProjectsByStartDate();
     }
+
     public boolean addProject(Project project) throws SQLException {
         return projectDAO.addProject(project);
     }
 
-    public boolean deleteProject(int id , int userDeleteChoice) throws SQLException {
-        return projectDAO.deleteProject(id , userDeleteChoice);
+    public boolean deleteProject(int id, int userDeleteChoice) throws SQLException {
+        return projectDAO.deleteProject(id, userDeleteChoice);
     }
 }

@@ -1,7 +1,7 @@
 package be.intecbrussel.data;
 
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ProjectDAO {
 
     public List<Project> getAllProjects() throws SQLException {
 
-        Connection connection = ConnectionPort.getConnection();
+        Connection connection = ConnectionFactory.getConnection();
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM Projects");
 
@@ -28,7 +28,7 @@ public class ProjectDAO {
     }
 
     public Project getProjectById(int id) throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE ProjectId = ?");
         statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
@@ -45,7 +45,7 @@ public class ProjectDAO {
     }
 
     public List<Project> getProjectsByStartDate() throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Projects WHERE StartDate LIKE CURRENT_DATE()");
         ResultSet rs = statement.executeQuery();
 
@@ -69,7 +69,7 @@ public class ProjectDAO {
 
     public boolean addProject(Project project) throws SQLException {
         try {
-            Connection connection = ConnectionPort.getConnection();
+            Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO Projects VALUES"
                             + "('" + project.getId()
@@ -87,10 +87,10 @@ public class ProjectDAO {
         return true;
     }
 
-    public boolean deleteProject(int id , int userDeleteChoice) throws SQLException {
+    public boolean deleteProject(int id, int userDeleteChoice) throws SQLException {
         try {
             if (userDeleteChoice == 1) {
-                Connection connection = ConnectionPort.getConnection();
+                Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "DELETE FROM Projects WHERE ProjectId = ?"
                 );

@@ -2,6 +2,7 @@ package be.intecbrussel.services;
 
 import be.intecbrussel.data.EmployeeDAO;
 import be.intecbrussel.model.Employee;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class EmployeeService {
     private EmployeeDAO employeeDAO = new EmployeeDAO();
 
     public List<Employee> getAllEmployees() throws SQLException {
-       List<Employee> employees = employeeDAO.getAllEmployees();
+        List<Employee> employees = employeeDAO.getAllEmployees();
         return employees;
     }
 
@@ -22,7 +23,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByBirthDate() throws SQLException {
-       return employeeDAO.getEmployeesByBirthDate();
+        return employeeDAO.getEmployeesByBirthDate();
     }
 
     public boolean addEmployee(Employee employee) throws SQLException {
@@ -33,7 +34,7 @@ public class EmployeeService {
         return employeeDAO.updateEmployee(employee);
     }
 
-    public boolean deleteEmployee(int id , int userDeleteChoice) throws SQLException {
-        return employeeDAO.deleteEmployee(id , userDeleteChoice);
+    public boolean deleteEmployee(int id, int userDeleteChoice) throws SQLException {
+        return employeeDAO.deleteEmployee(id, userDeleteChoice);
     }
 }

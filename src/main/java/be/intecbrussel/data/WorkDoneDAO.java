@@ -1,7 +1,7 @@
 package be.intecbrussel.data;
 
-import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.WorkDone;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class WorkDoneDAO {
 
     public List<WorkDone> getAllWorkDone() throws SQLException {
 
-        Connection connection = ConnectionPort.getConnection();
+        Connection connection = ConnectionFactory.getConnection();
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone");
 
@@ -27,13 +27,13 @@ public class WorkDoneDAO {
         return result;
     }
 
-    public List <WorkDone> getWorkDoneByProjectId(int projectId) throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
+    public List<WorkDone> getWorkDoneByProjectId(int projectId) throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM WorkDone WHERE ProjectId = ?");
         statement.setInt(1, projectId);
         ResultSet rs = statement.executeQuery();
 
-        List <WorkDone> result = new ArrayList<>();
+        List<WorkDone> result = new ArrayList<>();
         while (rs.next()) {
             WorkDone workDone = new WorkDone();
             workDone.setEmployeeId(rs.getInt("EmployeeId"));
@@ -46,13 +46,13 @@ public class WorkDoneDAO {
         return result;
     }
 
-    public WorkDone getWorkDoneByTwoId(int projectId , int employeeId) throws SQLException {
-        Connection connection = ConnectionPort.getConnection();
+    public WorkDone getWorkDoneByTwoId(int projectId, int employeeId) throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT * FROM WorkDone WHERE ProjectId = ? AND EmployeeId = ?");
         statement.setInt(1, projectId);
         statement.setInt(2, employeeId);
-       ResultSet rs = statement.executeQuery();
+        ResultSet rs = statement.executeQuery();
 
         WorkDone workDone = new WorkDone();
         while (rs.next()) {
@@ -67,7 +67,7 @@ public class WorkDoneDAO {
 
     public List<WorkDone> getAllWorkDoneByProfitability() throws SQLException {
 
-        Connection connection = ConnectionPort.getConnection();
+        Connection connection = ConnectionFactory.getConnection();
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone WHERE ");
 
@@ -87,7 +87,7 @@ public class WorkDoneDAO {
 
     public boolean addWorkDone(WorkDone workDone) {
         try {
-            Connection connection = ConnectionPort.getConnection();
+            Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO WorkDone VALUES"
                             + "('" + workDone.getEmployeeId()
@@ -106,9 +106,9 @@ public class WorkDoneDAO {
 
     }
 
-    public boolean updateWorkDone(WorkDone workDone , int updatedProjectId , int updatedEmployeeId) {
+    public boolean updateWorkDone(WorkDone workDone, int updatedProjectId, int updatedEmployeeId) {
         try {
-            Connection connection = ConnectionPort.getConnection();
+            Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE WorkDone SET \n" +
                             "EmployeeId=\n'" + workDone.getEmployeeId() + "'," +
@@ -127,10 +127,10 @@ public class WorkDoneDAO {
         return true;
     }
 
-    public boolean deleteWorkDone(int projectId , int employeeId , int userDeleteChoice) {
+    public boolean deleteWorkDone(int projectId, int employeeId, int userDeleteChoice) {
         try {
             if (userDeleteChoice == 1) {
-                Connection connection = ConnectionPort.getConnection();
+                Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "DELETE FROM WorkDone WHERE ProjectId = ? AND EmployeeId = ?"
                 );
@@ -142,8 +142,7 @@ public class WorkDoneDAO {
             } else {
                 return false;
             }
-        }
-        catch (SQLException e ) {
+        } catch (SQLException e) {
             System.out.println("An error has occurred on Table..." + e.getMessage());
             return false;
         }

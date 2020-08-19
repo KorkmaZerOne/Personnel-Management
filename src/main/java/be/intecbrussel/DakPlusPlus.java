@@ -1,21 +1,15 @@
 package be.intecbrussel;
 
-import be.intecbrussel.data.TableFactory;
-import be.intecbrussel.model.Employee;
-import be.intecbrussel.model.Project;
-import be.intecbrussel.model.WorkDone;
-import be.intecbrussel.services.EmployeeService;
-import be.intecbrussel.services.ProjectService;
-import be.intecbrussel.services.WorkDoneService;
+import be.intecbrussel.data.*;
+import be.intecbrussel.model.*;
+import be.intecbrussel.services.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class DakPlusPlus {
     public static void main(String[] args) throws SQLException {
@@ -435,12 +429,10 @@ public class DakPlusPlus {
                 try {
                     workDones = workDoneService.getAllWorkDone();
                     workDones.forEach(b -> System.out.println(b.toString()));
-
-                    //workDones = new ArrayList<>();
-                    WorkDone workDone = new WorkDone();
+                    WorkDone workDone;
                     EmployeeService employeeService = new EmployeeService();
                     ProjectService projectService = new ProjectService();
-                    Project project = new Project();
+                    Project project;
                     Employee employee = new Employee();
 
                     int projectId;
@@ -542,17 +534,12 @@ public class DakPlusPlus {
                     System.out.println("WORKDONE LIST");
                     workDones = workDoneService.getAllWorkDone();
                     workDones.forEach(b -> System.out.println(b.toString()));
-
-                    //workDones = new ArrayList<>();
-                    WorkDone workDone = new WorkDone();
-                    EmployeeService employeeService = new EmployeeService();
+                    WorkDone workDone;
                     ProjectService projectService = new ProjectService();
                     Project project = new Project();
                     Employee employee = new Employee();
 
                     int projectId;
-                    int updatedProjectId;
-                    int updatedEmployeeId;
                     System.out.println("ENTER PROJECT ID IN ORDER TO DELETE FROM WORKDONE: ");
 
                     do {
@@ -569,7 +556,6 @@ public class DakPlusPlus {
                         }
                     } while (projectId != project.getId());
 
-                    updatedProjectId = projectId;
                     int userDeleteChoice = 0;
                     int employeeId;
                     do {
@@ -587,19 +573,14 @@ public class DakPlusPlus {
                             System.out.println("ARE YOU SURE TO DELETE WORKDONE: ");
                             deleteMenu();
                             userDeleteChoice = scanner.nextInt();
-
                         }
                     } while (employeeId != workDone.getEmployeeId());
-                    boolean result = workDoneService.deleteWorkDone(projectId , employeeId , userDeleteChoice);
+                    boolean result = workDoneService.deleteWorkDone(projectId, employeeId, userDeleteChoice);
                     System.out.println(result ? "THE PROJECT WAS DELETED" : "NOT DELETED");
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
-
-
-
-
 
             } else if (subChoice == 6) {
                 showMenu();

@@ -10,7 +10,7 @@ public class Employee {
     private String lastName;
     private String phoneNumber;
     private String phoneNumberICE;
-    private LocalDate dateOfBirth ;
+    private LocalDate dateOfBirth;
     private double salary;
 
     public int getId() {
