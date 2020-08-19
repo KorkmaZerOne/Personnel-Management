@@ -21,7 +21,6 @@ public class DakPlusPlus {
 
         int mainChoice;
         int subChoice = -1;
-
         do {
             showMenu();
             mainChoice = requestInput(0, 3);
@@ -29,7 +28,6 @@ public class DakPlusPlus {
             if (mainChoice != 0) {
                 showSubMenu(mainChoice);
                 subChoice = requestInput(0, 7);
-
                 userChoice(mainChoice, subChoice);
             }
         } while (mainChoice != 0 && subChoice != 0);
@@ -94,12 +92,14 @@ public class DakPlusPlus {
                             System.out.println("Last Name (Obligatory): ");
                         }
                     } while (lastName.isEmpty());
+
                     System.out.println("Phone: ");
                     employee.setPhoneNumber(scanner.nextLine());
                     System.out.println("Phone ICE: ");
                     employee.setPhoneNumberICE(scanner.nextLine());
                     LocalDate localDate;
                     System.out.println("Date of Birth (yyyy-MM-dd): ");
+
                     do {
                         String birthDate = scanner.nextLine();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -114,6 +114,7 @@ public class DakPlusPlus {
 
                     System.out.println("Salary: ");
                     double salary;
+
                     do {
                         salary = scanner.nextDouble();
                         if (hasWageRequirement(salary)) {
