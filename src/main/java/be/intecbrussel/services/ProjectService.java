@@ -3,6 +3,7 @@ package be.intecbrussel.services;
 import be.intecbrussel.data.ProjectDAO;
 import be.intecbrussel.model.Employee;
 import be.intecbrussel.model.Project;
+import be.intecbrussel.model.WorkDone;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +23,10 @@ public class ProjectService {
 
     public List<Project> getProjectsByStartDate() throws SQLException {
         return projectDAO.getProjectsByStartDate();
+    }
+
+    public List<Project> getAllWorkDoneByProfitability() throws SQLException {
+        return projectDAO.getAllWorkDoneByProfitability();
     }
 
     public boolean addProject(Project project) throws SQLException {

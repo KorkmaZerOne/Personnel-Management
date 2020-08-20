@@ -258,6 +258,15 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 3) {
+                List<Project> projects;
+                try {
+                    projects = projectService.getAllWorkDoneByProfitability();
+                    projects.forEach(b -> System.out.println(b.toString()));
+                } catch (SQLException ignored) {
+                    System.out.println("Problems with db...");
+                    ignored.printStackTrace();
+                }
+            } else if (subChoice == 4) {
                 try {
                     Project project = new Project();
                     System.out.println("explanation:");
@@ -307,7 +316,7 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
-            } else if (subChoice == 4) {
+            } else if (subChoice == 5) {
                 List<Project> projects;
                 try {
                     projects = projectService.getAllProjects();
@@ -336,7 +345,7 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
-            } else if (subChoice == 5) {
+            } else if (subChoice == 6) {
                 showMenu();
             }
         }
@@ -363,6 +372,14 @@ public class DakPlusPlus {
                     System.out.println(" Problems with db..." + ignored.getMessage());
                 }
             } else if (subChoice == 3) {
+                List<WorkDone> workDone = null;
+                try {
+                    workDone = workDoneService.getWorkDoneByTopEmployee();
+                    workDone.forEach(b -> System.out.println(b.toString()));
+                } catch (SQLException ignored) {
+                    System.out.println(" Problems with db..." + ignored.getMessage());
+                }
+            } else if (subChoice == 4) {
                 WorkDone workDone = new WorkDone();
                 EmployeeService employeeService = new EmployeeService();
                 ProjectService projectService = new ProjectService();
@@ -425,7 +442,7 @@ public class DakPlusPlus {
                 boolean result = workDoneService.addWorkDone(workDone);
                 System.out.println(result ? "THE WORKDONE WAS ADDED" : "Error");
 
-            } else if (subChoice == 4) {
+            } else if (subChoice == 5) {
                 List<WorkDone> workDones = null;
                 try {
                     workDones = workDoneService.getAllWorkDone();
@@ -528,7 +545,7 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
-            } else if (subChoice == 5) {
+            } else if (subChoice == 6) {
 
                 List<WorkDone> workDones;
                 try {
@@ -583,7 +600,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
 
-            } else if (subChoice == 6) {
+            } else if (subChoice == 7) {
                 showMenu();
             }
         }
@@ -603,9 +620,9 @@ public class DakPlusPlus {
         if (choice == 1) {
             System.out.println("---SUB MENU--");
             System.out.println("0. Exit");
-            System.out.println("1. Show all employees");
-            System.out.println("2. Show all employees filtered by last name");
-            System.out.println("3. show employees with upcoming birthday");
+            System.out.println("1. All employees");
+            System.out.println("2. All employees filtered by last name");
+            System.out.println("3. Employees with upcoming birthday");
             System.out.println("4. Create a new employee?");
             System.out.println("5. Edit a employee?");
             System.out.println("6. Delete a employee?");
@@ -614,21 +631,23 @@ public class DakPlusPlus {
         if (choice == 2) {
             System.out.println("---SUB MENU--");
             System.out.println("0. Exit");
-            System.out.println("1. Show ongoing projects");
-            System.out.println("2. Show projects starting today");
-            System.out.println("3. Create a new project");
-            System.out.println("4. Delete a project");
-            System.out.println("5. Main menu");
+            System.out.println("1. Ongoing projects");
+            System.out.println("2. Projects starting today");
+            System.out.println("3. Projects by profitability");
+            System.out.println("4. Create a new project");
+            System.out.println("5. Delete a project");
+            System.out.println("6. Main menu");
         }
         if (choice == 3) {
             System.out.println("---SUB MENU--");
             System.out.println("0. Exit");
-            System.out.println("1. Show all work list");
-            System.out.println("2. Show work list filtered by employee");
-            System.out.println("3. Create a new work list");
-            System.out.println("4. Edit a work list");
-            System.out.println("5. Delete a work list");
-            System.out.println("6. Main menu");
+            System.out.println("1. All WorkDone list");
+            System.out.println("2. WorkDone list by project");
+            System.out.println("3. WorkDone list by top three employee");
+            System.out.println("4. Create a new work list");
+            System.out.println("5. Edit a work list");
+            System.out.println("6. Delete a work list");
+            System.out.println("7. Main menu");
         }
     }
 

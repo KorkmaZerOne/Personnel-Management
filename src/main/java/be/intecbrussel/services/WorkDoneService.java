@@ -24,6 +24,11 @@ public class WorkDoneService {
         return workDone;
     }
 
+    public List<WorkDone> getWorkDoneByTopEmployee() throws SQLException {
+        List<WorkDone> workDone = workDoneDAO.getTopThreeEmployee();
+        return workDone;
+    }
+
     public boolean addWorkDone(WorkDone workDone) {
         return workDoneDAO.addWorkDone(workDone);
     }

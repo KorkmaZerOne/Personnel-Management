@@ -1,6 +1,7 @@
 package be.intecbrussel.data;
 
 import be.intecbrussel.model.Project;
+import be.intecbrussel.model.WorkDone;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,6 +67,28 @@ public class ProjectDAO {
         }
         return result;
     }
+
+    public List<Project> getAllWorkDoneByProfitability() throws SQLException {
+
+        Connection connection = ConnectionFactory.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone WHERE ");
+
+        List<Project> result = new ArrayList<>();
+        while (rs.next()) {
+            Project project = new Project();
+            project.setId(rs.getInt("ProjectId"));
+            project.setStartDate(rs.getDate("StartDate").toLocalDate());
+            project.setExplanation(rs.getString("Explanation"));
+            project.setPrice(rs.getInt("Price"));
+            project.setEndDate(rs.getDate("EndDate").toLocalDate());
+            result.add(project);
+        }
+        return result;
+    }
+
+
+
 
     public boolean addProject(Project project) throws SQLException {
         try {

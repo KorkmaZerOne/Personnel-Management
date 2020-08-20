@@ -1,5 +1,7 @@
 package be.intecbrussel.data;
 
+import be.intecbrussel.model.Employee;
+import be.intecbrussel.model.Project;
 import be.intecbrussel.model.WorkDone;
 
 import java.sql.*;
@@ -65,11 +67,15 @@ public class WorkDoneDAO {
         return workDone;
     }
 
-    public List<WorkDone> getAllWorkDoneByProfitability() throws SQLException {
+    public List<WorkDone> getTopThreeEmployee() throws SQLException {
 
         Connection connection = ConnectionFactory.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone WHERE ");
+        ResultSet rs = statement.executeQuery(
+                "SELECT * "
+                        + "FROM WorkDone "
+                        + "ORDER BY HoursWorked DESC "
+                        + "LIMIT 3");
 
         List<WorkDone> result = new ArrayList<>();
         while (rs.next()) {
@@ -81,9 +87,8 @@ public class WorkDoneDAO {
             workDone.setRemarks(rs.getString("Remarks"));
             result.add(workDone);
         }
-        return result;
+        return result ;
     }
-
 
     public boolean addWorkDone(WorkDone workDone) {
         try {
