@@ -68,27 +68,26 @@ public class ProjectDAO {
         return result;
     }
 
-    public List<Project> getAllWorkDoneByProfitability() throws SQLException {
+    public List<Project> getRecentProjectByProfitability() throws SQLException {
 
         Connection connection = ConnectionFactory.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM WorkDone WHERE ");
+        ResultSet rs = statement.executeQuery("SELECT *, Projects.Price-Employees.Salary/22/8*WorkDone.HoursWorked AS ProjectProfit "
+                + "FROM ((WorkDone "
+                + "LEFT OUTER JOIN Projects ON WorkDone.ProjectId = Projects.ProjectId) "
+                + "LEFT OUTER JOIN Employees ON WorkDone.EmployeeId = Employees.EmployeeId) "
+                + "ORDER BY ProjectProfit DESC;");
 
         List<Project> result = new ArrayList<>();
+
         while (rs.next()) {
             Project project = new Project();
             project.setId(rs.getInt("ProjectId"));
-            project.setStartDate(rs.getDate("StartDate").toLocalDate());
-            project.setExplanation(rs.getString("Explanation"));
-            project.setPrice(rs.getInt("Price"));
-            project.setEndDate(rs.getDate("EndDate").toLocalDate());
+            project.setProjectProfit(rs.getDouble("ProjectProfit"));
             result.add(project);
         }
         return result;
     }
-
-
-
 
     public boolean addProject(Project project) throws SQLException {
         try {
@@ -128,6 +127,4 @@ public class ProjectDAO {
             return false;
         }
     }
-
-
 }

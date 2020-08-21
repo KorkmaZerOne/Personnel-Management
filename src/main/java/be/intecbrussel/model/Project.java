@@ -8,6 +8,16 @@ public class Project {
     private LocalDate startDate;
     private int price;
     private LocalDate endDate;
+    private double projectProfit;
+
+    // public Project(){
+
+    // }
+
+    // public Project(int id, double projectProfit) {
+    //this.id = id;
+    // this.projectProfit = projectProfit;
+    //}
 
     public int getId() {
         return id;
@@ -49,6 +59,14 @@ public class Project {
         this.endDate = endDate;
     }
 
+    public double getProjectProfit() {
+        return projectProfit;
+    }
+
+    public void setProjectProfit(double projectProfit) {
+        this.projectProfit = projectProfit;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -57,6 +75,7 @@ public class Project {
                 ", startDate=" + startDate +
                 ", price=" + price +
                 ", endDate=" + endDate +
+                ", profit=" + projectProfit +
                 '}';
     }
 }

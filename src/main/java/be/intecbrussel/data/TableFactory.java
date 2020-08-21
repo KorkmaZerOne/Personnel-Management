@@ -17,16 +17,13 @@ public class TableFactory {
                 "   BirthDate date,\n" +
                 "   Salary Double\n" +
                 ")";
-
         try {
             Connection conn = ConnectionFactory.getConnection();
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlEmployee);
-            System.out.println("Employees table was created");
         } catch (SQLException e) {
             System.out.println("An error has occurred on table creation" + e.getMessage());
         }
-
     }
 
     public void createProjectsTable() {
@@ -41,7 +38,6 @@ public class TableFactory {
             Connection conn = ConnectionFactory.getConnection();
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlProjects);
-            System.out.println("Projects table was created");
         } catch (SQLException e) {
             System.out.println("An error has occurred on table creation" + e.getMessage());
         }
@@ -59,7 +55,6 @@ public class TableFactory {
             Connection conn = ConnectionFactory.getConnection();
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlWorkDone);
-            System.out.println("WorkDone table was created");
         } catch (SQLException e) {
             System.out.println("An error has occurred on table creation" + e.getMessage());
         }

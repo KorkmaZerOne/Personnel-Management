@@ -87,7 +87,7 @@ public class WorkDoneDAO {
             workDone.setRemarks(rs.getString("Remarks"));
             result.add(workDone);
         }
-        return result ;
+        return result;
     }
 
     public boolean addWorkDone(WorkDone workDone) {

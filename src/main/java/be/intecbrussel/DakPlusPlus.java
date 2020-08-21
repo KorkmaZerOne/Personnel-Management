@@ -38,7 +38,7 @@ public class DakPlusPlus {
             EmployeeService employeeService = new EmployeeService();
             Scanner scanner = new Scanner(System.in);
             if (subChoice == 1) {
-                List<Employee> employees = null;
+                List<Employee> employees;
                 try {
                     employees = employeeService.getAllEmployees();
                     employees.forEach(b -> System.out.println(b.toString()));
@@ -47,7 +47,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 2) {
-                List<Employee> employees = null;
+                List<Employee> employees;
                 try {
                     System.out.println("Enter employee name or last name for checking");
                     String name = scanner.nextLine();
@@ -58,7 +58,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 3) {
-                List<Employee> employees = null;
+                List<Employee> employees;
                 try {
                     employees = employeeService.getEmployeesByBirthDate();
                     employees.forEach(b -> System.out.println(b.toString()));
@@ -131,7 +131,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
             } else if (subChoice == 5) {
-                List<Employee> employees = null;
+                List<Employee> employees;
                 try {
                     employees = employeeService.getAllEmployees();
                     employees.forEach(b -> System.out.println(b.toString()));
@@ -260,7 +260,7 @@ public class DakPlusPlus {
             } else if (subChoice == 3) {
                 List<Project> projects;
                 try {
-                    projects = projectService.getAllWorkDoneByProfitability();
+                    projects = projectService.getRecentProjectByProfitability();
                     projects.forEach(b -> System.out.println(b.toString()));
                 } catch (SQLException ignored) {
                     System.out.println("Problems with db...");
@@ -353,7 +353,7 @@ public class DakPlusPlus {
             WorkDoneService workDoneService = new WorkDoneService();
             Scanner scanner = new Scanner(System.in);
             if (subChoice == 1) {
-                List<WorkDone> workDone = null;
+                List<WorkDone> workDone;
                 try {
                     workDone = workDoneService.getAllWorkDone();
                     workDone.forEach(b -> System.out.println(b.toString()));
@@ -361,25 +361,14 @@ public class DakPlusPlus {
                     System.out.println(" Problems with db..." + ignored.getMessage());
                 }
             } else if (subChoice == 2) {
-                List<WorkDone> workDone = null;
-                try {
-                    System.out.println("Enter PROJECT ID for checking");
-                    System.out.println("Project ID: ");
-                    int projectId = scanner.nextInt();
-                    workDone = workDoneService.getWorkDoneByProjectId(projectId);
-                    System.out.println(workDone.toString());
-                } catch (SQLException ignored) {
-                    System.out.println(" Problems with db..." + ignored.getMessage());
-                }
-            } else if (subChoice == 3) {
-                List<WorkDone> workDone = null;
+                List<WorkDone> workDone;
                 try {
                     workDone = workDoneService.getWorkDoneByTopEmployee();
                     workDone.forEach(b -> System.out.println(b.toString()));
                 } catch (SQLException ignored) {
                     System.out.println(" Problems with db..." + ignored.getMessage());
                 }
-            } else if (subChoice == 4) {
+            } else if (subChoice == 3) {
                 WorkDone workDone = new WorkDone();
                 EmployeeService employeeService = new EmployeeService();
                 ProjectService projectService = new ProjectService();
@@ -442,8 +431,8 @@ public class DakPlusPlus {
                 boolean result = workDoneService.addWorkDone(workDone);
                 System.out.println(result ? "THE WORKDONE WAS ADDED" : "Error");
 
-            } else if (subChoice == 5) {
-                List<WorkDone> workDones = null;
+            } else if (subChoice == 4) {
+                List<WorkDone> workDones;
                 try {
                     workDones = workDoneService.getAllWorkDone();
                     workDones.forEach(b -> System.out.println(b.toString()));
@@ -545,7 +534,7 @@ public class DakPlusPlus {
                     System.out.println("Problems with db...: " + ignored.getMessage());
                     ignored.printStackTrace();
                 }
-            } else if (subChoice == 6) {
+            } else if (subChoice == 5) {
 
                 List<WorkDone> workDones;
                 try {
@@ -554,7 +543,7 @@ public class DakPlusPlus {
                     workDones.forEach(b -> System.out.println(b.toString()));
                     WorkDone workDone;
                     ProjectService projectService = new ProjectService();
-                    Project project = new Project();
+                    Project project;
                     Employee employee = new Employee();
 
                     int projectId;
@@ -600,7 +589,7 @@ public class DakPlusPlus {
                     ignored.printStackTrace();
                 }
 
-            } else if (subChoice == 7) {
+            } else if (subChoice == 6) {
                 showMenu();
             }
         }
@@ -642,12 +631,11 @@ public class DakPlusPlus {
             System.out.println("---SUB MENU--");
             System.out.println("0. Exit");
             System.out.println("1. All WorkDone list");
-            System.out.println("2. WorkDone list by project");
-            System.out.println("3. WorkDone list by top three employee");
-            System.out.println("4. Create a new work list");
-            System.out.println("5. Edit a work list");
-            System.out.println("6. Delete a work list");
-            System.out.println("7. Main menu");
+            System.out.println("2. WorkDone list by top three employee");
+            System.out.println("3. Create a new work list");
+            System.out.println("4. Edit a work list");
+            System.out.println("5. Delete a work list");
+            System.out.println("6. Main menu");
         }
     }
 

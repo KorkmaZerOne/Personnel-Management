@@ -13,8 +13,7 @@ public class ProjectService {
     private ProjectDAO projectDAO = new ProjectDAO();
 
     public List<Project> getAllProjects() throws SQLException {
-        List<Project> projects = projectDAO.getAllProjects();
-        return projects;
+        return projectDAO.getAllProjects();
     }
 
     public Project getProjectById(int id) throws SQLException {
@@ -25,8 +24,8 @@ public class ProjectService {
         return projectDAO.getProjectsByStartDate();
     }
 
-    public List<Project> getAllWorkDoneByProfitability() throws SQLException {
-        return projectDAO.getAllWorkDoneByProfitability();
+    public List<Project> getRecentProjectByProfitability() throws SQLException {
+        return projectDAO.getRecentProjectByProfitability();
     }
 
     public boolean addProject(Project project) throws SQLException {
